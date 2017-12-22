@@ -1,0 +1,40 @@
+﻿/* 
+    Property Order of Importance
+    -------- ----- -- ----------
+    Positioning
+    Display / Box Model
+    Color
+    Text / Font
+    Other
+*/
+
+/* CurrentRegistration.php Styles */
+h1 {
+    text-align: center;
+}
+
+table, th, tr, td {
+    padding: 0.7% 5% 0.7% 0.5%;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    border-top: 1px solid #AAA;
+}
+
+.totalWkFormat {
+    text-align: right;
+    font-weight: 700;
+}
+
+.buttonsContainer {
+    text-align: right;
+}
+
+/* NewUser.php Styles */
+.form-horizontal .control-label {
+    text-align: left;
+}

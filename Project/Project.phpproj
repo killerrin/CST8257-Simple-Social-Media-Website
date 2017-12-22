@@ -16,6 +16,48 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\Classes\DataAccess\DBGenericRepository.php" />
+    <Compile Include="Common\Classes\DataAccess\DBManager.php" />
+    <Compile Include="Common\Footer.php" />
+    <Compile Include="Common\Header.php" />
+    <Compile Include="Common\IncludeAll.php" />
     <Compile Include="index.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Common\Classes\" />
+    <Folder Include="Common\Classes\DataAccess\" />
+    <Folder Include="Common\Classes\DataAccess\Repositories\" />
+    <Folder Include="Common\Classes\Models\" />
+    <Folder Include="Contents\" />
+    <Folder Include="Contents\AlgCss\" />
+    <Folder Include="Contents\css\" />
+    <Folder Include="Contents\fonts\" />
+    <Folder Include="Contents\img\" />
+    <Folder Include="Contents\js\" />
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Contents\AlgCss\Site.css" />
+    <Content Include="Contents\css\bootstrap-theme.css" />
+    <Content Include="Contents\css\bootstrap-theme.css.map" />
+    <Content Include="Contents\css\bootstrap-theme.min.css" />
+    <Content Include="Contents\css\bootstrap-theme.min.css.map" />
+    <Content Include="Contents\css\bootstrap.css" />
+    <Content Include="Contents\css\bootstrap.css.map" />
+    <Content Include="Contents\css\bootstrap.min.css" />
+    <Content Include="Contents\css\bootstrap.min.css.map" />
+    <Content Include="Contents\css\style.css" />
+    <Content Include="Contents\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Contents\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Contents\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Contents\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Contents\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Contents\img\AC.png" />
+    <Content Include="Contents\js\bootstrap.js" />
+    <Content Include="Contents\js\bootstrap.min.js" />
+    <Content Include="Contents\js\npm.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\Site.js" />
   </ItemGroup>
 </Project>

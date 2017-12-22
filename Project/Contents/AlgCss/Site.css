@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-May-2016, 4:56:39 PM
+    Author     : gongw
+*/
+.btn-min-width {
+    min-width: 100px
+}
+
+.vertical-margin {
+    margin-bottom: 5px;
+    margin-top: 5px
+}
+
+.horizontal-margin {
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.content-center {
+    align-content: center
+}
+
+.no-padding {
+    padding: 0px
+}
+
+.no-margin {
+    margin: 0px
+}
+
+.error {
+    color: red
+}
+
+.distinct {
+    color: blue
+}
+
+
+/* Sticky Footer */
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 40px;
+    background-color: white;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    background-color: darkgreen;
+    color: white;
+}
+
+    .footer .container .row p {
+        text-align: center;
+        margin-top: 10px;
+    }
