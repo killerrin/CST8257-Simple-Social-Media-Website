@@ -19,6 +19,7 @@
     <Compile Include="Common\Classes\DataAccess\DBGenericRepository.php" />
     <Compile Include="Common\Classes\DataAccess\DBManager.php" />
     <Compile Include="Common\Classes\Image\Picture.php" />
+    <Compile Include="Common\Classes\Models\User.php" />
     <Compile Include="Common\ConstraintsAndSettings.php" />
     <Compile Include="Common\Footer.php" />
     <Compile Include="Common\Header.php" />
