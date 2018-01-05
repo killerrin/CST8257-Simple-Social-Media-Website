@@ -4,7 +4,13 @@
 <?php
 $LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
 
-//TODO: Get $accessibilityMode from the DB
+// Get Accessibility Modes from DB
+$dbManager = new DBManager();
+$dbManager->connect();
+$accessibilityRepo = new DBAccessibilityRepository($dbManager);
+$accessibilityMode = $accessibilityRepo->getAll();
+$dbManager->close();
+
 ?>
 
     <div class="container">
