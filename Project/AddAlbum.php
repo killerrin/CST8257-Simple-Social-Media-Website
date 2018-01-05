@@ -34,7 +34,7 @@ $dbManager->close();
                 <div class="col-xs-9">
                     <select name="accessibility" id="accessibility" class="form-control">
                         <?php foreach($accessibilityMode as $mode): ?>
-                        <option value="<?php echo $mode->Accessibility_Code; ?>" ><?php echo $mode->Description; ?></option>
+                        <option value=<?php echo "'$mode->Accessibility_Code' >$mode->Description"; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
