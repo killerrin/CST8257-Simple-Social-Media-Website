@@ -27,11 +27,11 @@ class Album
     }
 
     public function GetAccessibility(DBAccessibilityRepository $repo) {
-        return;
+        return $repo->getID($this->Accessibility_Code);
     }
 
     public function GetUserOwner(DBUserRepository $repo) {
-        return;
+        return $repo->getID($this->Owner_Id);
     }
 
     public function GetPictures(DBPictureRepository $repo) {
