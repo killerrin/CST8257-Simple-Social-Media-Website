@@ -18,7 +18,7 @@ if ($_POST) {
     $loginError = true;
     foreach ($studentsArray as $value)
     {
-        if ($value->studentID == $studentID && User::VerifyPassword($password, $value->password)) {
+        if ($value->User_Id == $studentID && User::VerifyPassword($password, $value->Password)) {
             $loginError = false;
             $_SESSION["LoggedInUser"] = $value;
 
@@ -28,7 +28,7 @@ if ($_POST) {
             $returnUrl = $_GET["returnUrl"];
             if (empty($returnUrl)) {
                 // Not specified defaults to Course Selection Page
-                header("Location: CourseSelection.php");
+                header("Location: index.php");
             }
             else {
                 header("Location: $returnUrl");
@@ -53,13 +53,13 @@ if ($_POST) {
         <p class="error">Incorrect Student ID and/or Password</p>
         <?php endif; ?>
         <div class="form-group">
-            <label for="inputStudentNumber" class="col-sm-2 control-label">StudentID</label>
+            <label for="inputStudentNumber" class="col-sm-2 control-label">User ID:</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="inputStudentNumber" name="inputStudentNumber" placeholder="Student ID" value="<?php echo $studentID; ?>" required />
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <label for="inputPassword" class="col-sm-2 control-label">Password:</label>
             <div class="col-sm-4">
                 <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" value="<?php echo $password; ?>" required />
             </div>
