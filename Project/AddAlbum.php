@@ -9,6 +9,13 @@ $dbManager = new DBManager();
 $dbManager->connect();
 $accessibilityRepo = new DBAccessibilityRepository($dbManager);
 $accessibilityMode = $accessibilityRepo->getAll();
+
+// Add album to database on submission
+if (isset($_POST)) {
+    $albumRepo = new DBAlbumRepository($dbManager);
+
+    $newAlbum = new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility']));
+}
 $dbManager->close();
 
 ?>
