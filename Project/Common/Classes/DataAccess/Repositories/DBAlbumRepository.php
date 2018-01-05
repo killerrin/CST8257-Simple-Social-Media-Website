@@ -42,7 +42,6 @@ class DBAlbumRepository extends DBGenericRepository
     function insert(Album $item) {
         $query = "INSERT INTO $this->tableName
                   VALUES(null, '".$this->dbManager->escapeString($item->Title)."', '".$this->dbManager->escapeString($item->Description)."', '".$this->dbManager->escapeString($item->Date_Updated)."', '".$this->dbManager->escapeString($item->Owner_Id)."', '".$this->dbManager->escapeString($item->Accessibility_Code)."')";
-        var_dump($query);
         return $this->dbManager->queryCustom($query);
     }
 
