@@ -12,15 +12,21 @@ $accessibilityMode = $accessibilityRepo->getAll();
 
 // Add album to database on submission
 if (!empty($_POST)) {
-    $albumRepo = new DBAlbumRepository($dbManager);
+    $emptyFieldError = false;
+    if (empty($_POST['title']) || empty($_POST['accessibility']) || empty($_POST['description']))
+        $emptyFieldError = true;
+    if (!$emptyFieldError) {
+        $albumRepo = new DBAlbumRepository($dbManager);
 
-    $newAlbum = new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility']));
+        $newAlbum = new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility']));
 
-    $insertResult = $albumRepo->insert($newAlbum);
+        $insertResult = $albumRepo->insert($newAlbum);
+    }
 }
 
 $dbManager->close();
 
+//TODO: validation
 ?>
 
     <div class="container">
@@ -41,6 +47,11 @@ $dbManager->close();
             <?php if (isset($insertResult) && !$insertResult): ?>
             <div class="alert alert-danger">
                 <p><span class="glyphicon glyphicon-thumbs-down"></span> An error occurred!</p>
+            </div>
+            <?php endif; ?>
+            <?php if (isset($emptyFieldError) && $emptyFieldError): ?>
+            <div class="alert alert-danger">
+                <p><span class="glyphicon glyphicon-thumbs-down"></span> All fields are required!</p>
             </div>
             <?php endif; ?>
             <div class="form-group">
