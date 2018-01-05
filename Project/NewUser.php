@@ -36,7 +36,7 @@ if ($_POST) {
     }
 
     if (empty($studentIDError) && empty($nameError) && empty($phoneError) && empty($passwordError) && empty($password2Error)) {
-        $student = new Student($studentID, $name, $phone, $password);
+        $student = new User($studentID, $name, $phone, User::HashPassword($password));
         $dbInsertResult = $studentRepo->insert($student);
     }
 

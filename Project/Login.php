@@ -18,7 +18,7 @@ if ($_POST) {
     $loginError = true;
     foreach ($studentsArray as $value)
     {
-        if ($value->studentID == $studentID && $value->password == $password) {
+        if ($value->studentID == $studentID && User::VerifyPassword($password, $value->password)) {
             $loginError = false;
             $_SESSION["LoggedInUser"] = $value;
 
