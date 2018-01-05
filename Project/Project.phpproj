@@ -16,9 +16,16 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddAlbum.php" />
     <Compile Include="Common\Classes\DataAccess\DBGenericRepository.php" />
     <Compile Include="Common\Classes\DataAccess\DBManager.php" />
     <Compile Include="Common\Classes\Image\Picture.php" />
+    <Compile Include="Common\Classes\Models\Accessibility.php" />
+    <Compile Include="Common\Classes\Models\Album.php" />
+    <Compile Include="Common\Classes\Models\Comment.php" />
+    <Compile Include="Common\Classes\Models\Friendship.php" />
+    <Compile Include="Common\Classes\Models\FriendshipStatus.php" />
+    <Compile Include="Common\Classes\Models\Picture.php" />
     <Compile Include="Common\Classes\Models\User.php" />
     <Compile Include="Common\ConstraintsAndSettings.php" />
     <Compile Include="Common\Footer.php" />
