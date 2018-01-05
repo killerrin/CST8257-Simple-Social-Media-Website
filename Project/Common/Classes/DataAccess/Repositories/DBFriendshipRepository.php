@@ -7,7 +7,7 @@
  * @version 1.0
  * @author andre
  */
-class DBFriendshipStatusRepository extends DBGenericRepository
+class DBFriendshipRepository extends DBGenericRepository
 {
     public function __construct(DBManager $dbManager)
     {
