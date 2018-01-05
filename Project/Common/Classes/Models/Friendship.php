@@ -29,4 +29,17 @@ class Friendship
     public function GetFriendshipStatus(DBFriendshipStatusRepository $repo) {
         return $repo->getID($this->Status_Code);
     }
+
+    public static function AreUsersFriends(DBFriendshipRepository $friendRepo, User $u1, User $u2) {
+        $friendships = $friendRepo->getAllForUser($u1->User_Id);
+        foreach ($friendships as $friend)
+        {
+            if ($friend->Status_Code != "accepted") continue;
+        	if ($friend->Friend_RequesterId == $u2->User_Id || $friend->Friend_RequesteeId == $u2->User_Id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
