@@ -2,7 +2,9 @@
 <?php include "Common/Header.php"; ?>
 
 <?php
-//$LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
+$LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
+
+//TODO: Get $accessibilityMode from the DB
 ?>
 
     <div class="container">
@@ -25,10 +27,9 @@
                 <label for="accessibility" class="col-xs-3 control-label">Accessibility:</label>
                 <div class="col-xs-9">
                     <select name="accessibility" id="accessibility" class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        <?php foreach($accessibilityMode as $mode): ?>
+                        <option value="<?php echo $mode->Accessibility_Code; ?>" ><?php echo $mode->Description; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
