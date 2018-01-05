@@ -15,6 +15,8 @@ if (isset($_POST)) {
     $albumRepo = new DBAlbumRepository($dbManager);
 
     $newAlbum = new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility']));
+
+    $insertResult = $albumRepo->insert($newAlbum);
 }
 $dbManager->close();
 
@@ -30,6 +32,16 @@ $dbManager->close();
             <a href="Logout.php">here</a>)
         </p>
         <form action="AddAlbum.php" method="post" name="albumForm" class="form-horizontal">
+            <?php if (isset($insertResult) && $insertResult): ?>
+            <div class="alert alert-success">
+                <p><span class="glyphicon-thumbs-up glyphicon"></span> Album added successfully!</p>
+            </div>
+            <?php endif; ?>
+            <?php if (isset($insertResult) && !$insertResult): ?>
+            <div class="alert alert-danger">
+                <p><span class="glyphicon glyphicon-thumbs-down"></span> An error occurred!</p>
+            </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label for="title" class="col-xs-3 control-label">Title:</label>
                 <div class="col-xs-9">
