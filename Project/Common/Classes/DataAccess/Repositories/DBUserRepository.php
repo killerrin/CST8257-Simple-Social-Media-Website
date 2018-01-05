@@ -23,29 +23,29 @@ class DBUserRepository extends DBGenericRepository
     }
 
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $dbManager->escapeString($key));
+        $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result);
     }
 
     // Return True of Success, False if failed
     function insert(User $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES('$dbManager->escapeString($item->User_Id)', '$dbManager->escapeString($item->Name)', '$dbManager->escapeString($item->Phone)', '$dbManager->escapeString($item->Password)')";
+                  VALUES('".$this->dbManager->escapeString($item->User_Id)."', '".$this->dbManager->escapeString($item->Name)."', '".$this->dbManager->escapeString($item->Phone)."', '".$this->dbManager->escapeString($item->Password)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(User $item) {
         $query = "UPDATE $this->tableName
-                  SET Name = '$dbManager->escapeString($item->Name)', Phone = '$dbManager->escapeString($item->Phone)', Password = '$dbManager->escapeString($item->Password)'
-                  WHERE User_Id = '$dbManager->escapeString($item->User_Id)'";
+                  SET Name = '".$this->dbManager->escapeString($item->Name)."', Phone = '".$this->dbManager->escapeString($item->Phone)."', Password = '".$this->dbManager->escapeString($item->Password)."'
+                  WHERE User_Id = '".$this->dbManager->escapeString($item->User_Id)."'";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function delete(User $item) {
         $query = "DELETE FROM $this->tableName
-                  WHERE User_Id = '$dbManager->escapeString($item->User_Id)'";
+                  WHERE User_Id = '".$this->dbManager->escapeString($item->User_Id)."'";
         return $this->dbManager->queryCustom($query);
     }
 }

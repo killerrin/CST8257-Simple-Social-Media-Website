@@ -34,21 +34,22 @@ class DBAlbumRepository extends DBGenericRepository
 
 //  Get Album by Album_Id
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $dbManager->escapeString($key));
+        $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result);
     }
 
 //  Return true if success, else false
     function insert(Album $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES($item->Album_Id, '$dbManager->escapeString($item->Title)', '$dbManager->escapeString($item->Description)', '$dbManager->escapeString($item->Date_Updated)', '$dbManager->escapeString($item->Owner_Id)', '$dbManager->escapeString($item->Accessibility_Code)')";
+                  VALUES(null, '".$this->dbManager->escapeString($item->Title)."', '".$this->dbManager->escapeString($item->Description)."', '".$this->dbManager->escapeString($item->Date_Updated)."', '".$this->dbManager->escapeString($item->Owner_Id)."', '".$this->dbManager->escapeString($item->Accessibility_Code)."')";
+        var_dump($query);
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(Album $item) {
         $query = "UPDATE $this->tableName
-                  SET Title = '$dbManager->escapeString($item->Title)', Description = '$dbManager->escapeString($item->Description)', Date_Updated = '$dbManager->escapeString($item->Date_Updated)', Owner_Id = '$dbManager->escapeString($item->Owner_Id)', Accessibility_Code = '$dbManager->escapeString($item->Accessibility_Code)'
+                  SET Title = '".$this->dbManager->escapeString($item->Title)."', Description = '".$this->dbManager->escapeString($item->Description)."', Date_Updated = '".$this->dbManager->escapeString($item->Date_Updated)."', Owner_Id = '".$this->dbManager->escapeString($item->Owner_Id)."', Accessibility_Code = '".$this->dbManager->escapeString($item->Accessibility_Code)."'
                   WHERE Album_Id = $item->Album_Id";
         return $this->dbManager->queryCustom($query);
     }
@@ -56,7 +57,7 @@ class DBAlbumRepository extends DBGenericRepository
     // Return True of Success, False if failed
     function delete(Album $item) {
         $query = "DELETE FROM $this->tableName
-                  WHERE Album_Id = $dbManager->escapeString($item->Album_Id)";
+                  WHERE Album_Id = ".$this->dbManager->escapeString($item->Album_Id);
         return $this->dbManager->queryCustom($query);
     }
 }
