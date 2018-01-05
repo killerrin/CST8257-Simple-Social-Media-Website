@@ -34,21 +34,21 @@ class DBAlbumRepository extends DBGenericRepository
 
 //  Get Album by Album_Id
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $key);
+        $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $dbManager->escapeString($key));
         return $this->parseQuery($result);
     }
 
 //  Return true if success, else false
     function insert(Album $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES($item->Album_Id, '$item->Title', '$item->Description', '$item->Date_Updated', '$item->Owner_Id', '$item->Accessibility_Code')";
+                  VALUES($item->Album_Id, '$dbManager->escapeString($item->Title)', '$dbManager->escapeString($item->Description)', '$dbManager->escapeString($item->Date_Updated)', '$dbManager->escapeString($item->Owner_Id)', '$dbManager->escapeString($item->Accessibility_Code)')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(Album $item) {
         $query = "UPDATE $this->tableName
-                  SET Title = '$item->Title', Description = '$item->Description', Date_Updated = '$item->Date_Updated', Owner_Id = '$item->Owner_Id', Accessibility_Code = '$item->Accessibility_Code'
+                  SET Title = '$dbManager->escapeString($item->Title)', Description = '$dbManager->escapeString($item->Description)', Date_Updated = '$dbManager->escapeString($item->Date_Updated)', Owner_Id = '$dbManager->escapeString($item->Owner_Id)', Accessibility_Code = '$dbManager->escapeString($item->Accessibility_Code)'
                   WHERE Album_Id = $item->Album_Id";
         return $this->dbManager->queryCustom($query);
     }
@@ -56,7 +56,7 @@ class DBAlbumRepository extends DBGenericRepository
     // Return True of Success, False if failed
     function delete(Album $item) {
         $query = "DELETE FROM $this->tableName
-                  WHERE Album_Id = $item->Album_Id";
+                  WHERE Album_Id = $dbManager->escapeString($item->Album_Id)";
         return $this->dbManager->queryCustom($query);
     }
 }

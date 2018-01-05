@@ -36,9 +36,9 @@ class DBFriendshipRepository extends DBGenericRepository
     function getID($requesterID, $requesteeID, $statusCode) {
         $query = "SELECT * FROM $this->tableName
                   WHERE
-                    Friend_RequesterId = '$requesterID' AND
-                    Friend_RequesteeId = '$requesteeID' AND
-                    Status_Code = '$statusCode'";
+                    Friend_RequesterId = '$dbManager->escapeString($requesterID)' AND
+                    Friend_RequesteeId = '$dbManager->escapeString($requesteeID)' AND
+                    Status_Code = '$dbManager->escapeString($statusCode)'";
         $result = $this->dbManager->queryCustom($query);
         return $this->parseQuery($result);
     }
@@ -46,15 +46,15 @@ class DBFriendshipRepository extends DBGenericRepository
     //  Return true if success, else false
     function insert(Friendship $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES('$item->Friend_RequesterId', '$item->Friend_RequesteeId', 'Status_Code')";
+                  VALUES('$dbManager->escapeString($item->Friend_RequesterId)', '$dbManager->escapeString($item->Friend_RequesteeId)', 'Status_Code')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(Friendship $item) {
         $query = "UPDATE $this->tableName
-                  SET Friend_RequesterId = '$item->Friend_RequesterId', Friend_RequesteeId = '$item->Friend_RequesteeId', Status_Code = '$item->Status_Code'
-                  WHERE Status_Code = '$item->Status_Code'";
+                  SET Friend_RequesterId = '$dbManager->escapeString($item->Friend_RequesterId)', Friend_RequesteeId = '$dbManager->escapeString($item->Friend_RequesteeId)', Status_Code = '$dbManager->escapeString($item->Status_Code)'
+                  WHERE Status_Code = '$dbManager->escapeString($item->Status_Code)'";
         return $this->dbManager->queryCustom($query);
     }
 
@@ -62,9 +62,9 @@ class DBFriendshipRepository extends DBGenericRepository
     function delete(Friendship $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE
-                    Friend_RequesterId = '$item->Friend_RequesterId' AND
-                    Friend_RequesteeId = '$item->Friend_RequesteeId' AND
-                    Status_Code = '$item->Status_Code'";
+                    Friend_RequesterId = '$dbManager->escapeString($item->Friend_RequesterId)' AND
+                    Friend_RequesteeId = '$dbManager->escapeString($item->Friend_RequesteeId)' AND
+                    Status_Code = '$dbManager->escapeString($item->Status_Code)'";
         return $this->dbManager->queryCustom($query);
     }
 }

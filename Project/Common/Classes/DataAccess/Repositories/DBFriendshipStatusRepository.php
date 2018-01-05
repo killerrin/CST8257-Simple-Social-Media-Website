@@ -35,29 +35,29 @@ class DBFriendshipStatusRepository extends DBGenericRepository
 
     //  Get Accessibility by Status_Code
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "Status_Code", $key);
+        $result = $this->dbManager->queryByFilter($this->tableName, "Status_Code", $dbManager->escapeString($key));
         return $this->parseQuery($result);
     }
 
     //  Return true if success, else false
     function insert(Accessibility $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES('$item->Status_Code', '$item->Description')";
+                  VALUES('$dbManager->escapeString($item->Status_Code)', '$dbManager->escapeString($item->Description)')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(Accessibility $item) {
         $query = "UPDATE $this->tableName
-                  SET Description = '$item->Description'
-                  WHERE Status_Code = '$item->Status_Code'";
+                  SET Description = '$dbManager->escapeString($item->Description)'
+                  WHERE Status_Code = '$dbManager->escapeString($item->Status_Code)'";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function delete(Accessibility $item) {
         $query = "DELETE FROM $this->tableName
-                  WHERE Status_Code = '$item->Status_Code'";
+                  WHERE Status_Code = '$dbManager->escapeString($item->Status_Code)'";
         return $this->dbManager->queryCustom($query);
     }
 }

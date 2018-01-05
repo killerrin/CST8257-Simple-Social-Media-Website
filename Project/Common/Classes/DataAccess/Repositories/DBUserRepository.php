@@ -23,29 +23,29 @@ class DBUserRepository extends DBGenericRepository
     }
 
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $key);
+        $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $dbManager->escapeString($key));
         return $this->parseQuery($result);
     }
 
     // Return True of Success, False if failed
     function insert(User $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES('$item->User_Id', '$item->Name', '$item->Phone', '$item->Password')";
+                  VALUES('$dbManager->escapeString($item->User_Id)', '$dbManager->escapeString($item->Name)', '$dbManager->escapeString($item->Phone)', '$dbManager->escapeString($item->Password)')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(User $item) {
         $query = "UPDATE $this->tableName
-                  SET Name = '$item->Name', Phone = '$item->Phone', Password = '$item->Password'
-                  WHERE User_Id = '$item->User_Id'";
+                  SET Name = '$dbManager->escapeString($item->Name)', Phone = '$dbManager->escapeString($item->Phone)', Password = '$dbManager->escapeString($item->Password)'
+                  WHERE User_Id = '$dbManager->escapeString($item->User_Id)'";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function delete(User $item) {
         $query = "DELETE FROM $this->tableName
-                  WHERE User_Id = '$item->User_Id'";
+                  WHERE User_Id = '$dbManager->escapeString($item->User_Id)'";
         return $this->dbManager->queryCustom($query);
     }
 }
