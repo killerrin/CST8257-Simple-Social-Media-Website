@@ -67,11 +67,12 @@ $dbManager->close();
                 </tr>
             </thead>
             <tbody>
+                <?php if (count($albums) > 0): ?>
                 <?php foreach($albums as $album): ?>
                 <tr>
-                    <td><?php echo $album->Title; ?></td>
+                    <td><a href="MyPictures.php?album=<?php echo $album->Album_Id; ?>" ><?php echo $album->Title; ?></td>
                     <td><?php echo $album->Date_Updated; ?></td>
-                    <td><?php echo 0;//count($album->getPictures()); ?></td>
+                    <td><?php echo 0;//TODO: count($album->getPictures()); ?></td>
                     <td>
                         <input type="hidden" name="albumId[]" value="<?php echo $album->Album_Id; ?>" />
                         <select name="newAccessibility[]" class="form-control">
@@ -81,10 +82,16 @@ $dbManager->close();
                         </select>
                     </td>
                     <td>
-                        <a href="?delete=<?php echo $album->Album_Id; ?>" onclick="confirm('Are you sure you wish to delete the album <?php echo $album->Title; ?>?')">Delete</a>
+                        <a href="?delete=<?php echo $album->Album_Id; ?>" onclick="return confirm('Are you sure you wish to delete the album <?php echo $album->Title; ?>?')">Delete</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                <?php endif;
+                if (count($albums) == 0): ?>
+                <tr>
+                    <td colspan="5" align="center">There are no albums to display!</td>
+                </tr>
+                <?php endif; ?>
             </tbody>
         </table>
         <div class="col-xs-offset-9 col-xs-3">
