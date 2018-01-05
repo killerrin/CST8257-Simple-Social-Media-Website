@@ -21,7 +21,7 @@ $LoggedInUser = $_SESSION["LoggedInUser"];
     <p>
         Welcome back, 
         <strong>
-            <?php echo $LoggedInUser->name; ?>!
+            <?php echo $LoggedInUser->Name; ?>!
         </strong>(not you? change user
         <a href="Logout.php">here</a>)
     </p>

@@ -50,7 +50,7 @@ if ($_POST) {
 
     <form class="form-horizontal" action="Login.php" method="post">
         <?php if($loginError): ?>
-        <p class="error">Incorrect Student ID and/or Password</p>
+        <p class="error">Incorrect User ID and/or Password</p>
         <?php endif; ?>
         <div class="form-group">
             <label for="inputStudentNumber" class="col-sm-2 control-label">User ID:</label>

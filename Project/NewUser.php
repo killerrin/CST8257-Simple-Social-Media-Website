@@ -45,7 +45,7 @@ if ($_POST) {
     if ($dbInsertResult) {
         $_SESSION["LoggedInUser"] = $student;
 
-        header("Location: CourseSelection.php");
+        header("Location: index.php");
         die();
     }
 }
@@ -64,7 +64,7 @@ if ($_POST) {
 
     <form class="form-horizontal" action="NewUser.php" method="post">
         <div class="form-group">
-            <label for="inputStudentNumber" class="col-sm-2 control-label">StudentID</label>
+            <label for="inputStudentNumber" class="col-sm-2 control-label">User ID:</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="inputStudentNumber" name="inputStudentNumber" placeholder="Student ID" value="<?php echo $studentID; ?>" required />
             </div>
