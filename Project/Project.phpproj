@@ -19,6 +19,7 @@
     <Compile Include="AddAlbum.php" />
     <Compile Include="Common\Classes\DataAccess\DBGenericRepository.php" />
     <Compile Include="Common\Classes\DataAccess\DBManager.php" />
+    <Compile Include="Common\Classes\DataAccess\Repositories\DBUserRepository.php" />
     <Compile Include="Common\Classes\Image\Picture.php" />
     <Compile Include="Common\Classes\Models\Accessibility.php" />
     <Compile Include="Common\Classes\Models\Album.php" />

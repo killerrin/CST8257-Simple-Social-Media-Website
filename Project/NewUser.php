@@ -27,7 +27,7 @@ if ($_POST) {
 
     // Create the DB and get the Users
     $dbManager = new DBManager();
-    $studentRepo = new DBStudentRepository($dbManager);
+    $studentRepo = new DBUserRepository($dbManager);
     $dbManager->connect();
 
     $student = $studentRepo->getID($studentID);
