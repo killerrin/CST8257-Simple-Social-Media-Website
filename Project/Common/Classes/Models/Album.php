@@ -33,4 +33,14 @@ class Album
     public function GetUserOwner(DBUserRepository $repo) {
         return;
     }
+
+    public function GetPictures(DBPictureRepository $repo) {
+        $pictures = $repo->getAll();
+        $array = array();
+        foreach ($pictures as $picture) {
+            if ($picture->Album_Id == $this->Album_Id)
+                array_push($array, $picture);
+        return $array;
+        }
+    }
 }

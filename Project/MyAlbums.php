@@ -72,7 +72,7 @@ $dbManager->close();
                 <tr>
                     <td><a href="MyPictures.php?album=<?php echo $album->Album_Id; ?>" ><?php echo $album->Title; ?></td>
                     <td><?php echo $album->Date_Updated; ?></td>
-                    <td><?php echo 0;//TODO: count($album->getPictures()); ?></td>
+                    <td><?php $dbManager = new DBManager(); $dbManager->connect(); $pictureRepo = new DBPictureRepository($dbManager); echo count($album->getPictures($pictureRepo)); $dbManager->close(); ?></td>
                     <td>
                         <input type="hidden" name="albumId[]" value="<?php echo $album->Album_Id; ?>" />
                         <select name="newAccessibility[]" class="form-control">
