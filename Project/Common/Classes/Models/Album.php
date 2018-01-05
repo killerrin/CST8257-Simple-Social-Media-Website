@@ -40,7 +40,7 @@ class Album
         foreach ($pictures as $picture) {
             if ($picture->Album_Id == $this->Album_Id)
                 array_push($array, $picture);
-        return $array;
         }
+        return $array;
     }
 }
