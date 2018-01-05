@@ -1,6 +1,6 @@
-<?php session_start(); ?>
-<?php include "Common/Header.php"; ?>
 
+<?php include "Common/Header.php"; ?>
+<?php session_start(); ?>
 <?php
 $LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
 
@@ -11,13 +11,17 @@ $accessibilityRepo = new DBAccessibilityRepository($dbManager);
 $accessibilityMode = $accessibilityRepo->getAll();
 
 // Add album to database on submission
-if (isset($_POST)) {
+if (!empty($_POST)) {
     $albumRepo = new DBAlbumRepository($dbManager);
+    var_dump($_POST);
+    var_dump($LoggedInUser);
+    var_dump(new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility'])));
 
     $newAlbum = new Album(null, $dbManager->escapeString($_POST['title']), $dbManager->escapeString($_POST['description']), date('Y-m-d H:i:s'), $LoggedInUser->User_Id, $dbManager->escapeString($_POST['accessibility']));
 
     $insertResult = $albumRepo->insert($newAlbum);
 }
+
 $dbManager->close();
 
 ?>
