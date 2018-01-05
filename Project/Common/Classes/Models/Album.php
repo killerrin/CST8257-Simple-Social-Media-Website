@@ -29,7 +29,7 @@ class Album
         return;
     }
 
-    public function GetOwner() {
+    public function GetUserOwner() {
         return;
     }
 }
