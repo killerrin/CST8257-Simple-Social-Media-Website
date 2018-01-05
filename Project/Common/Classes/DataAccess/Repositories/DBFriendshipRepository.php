@@ -36,8 +36,8 @@ class DBFriendshipStatusRepository extends DBGenericRepository
     function getID($requesterID, $requesteeID, $statusCode) {
         $query = "SELECT * FROM $this->tableName
                   WHERE
-                    Friend_RequesterId = '$requesterID'
-                    Friend_RequesteeId = '$requesteeID'
+                    Friend_RequesterId = '$requesterID' AND
+                    Friend_RequesteeId = '$requesteeID' AND
                     Status_Code = '$statusCode'";
         $result = $this->dbManager->queryCustom($query);
         return $this->parseQuery($result);
@@ -62,8 +62,8 @@ class DBFriendshipStatusRepository extends DBGenericRepository
     function delete(Friendship $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE
-                    Friend_RequesterId = '$item->Friend_RequesterId'
-                    Friend_RequesteeId = '$item->Friend_RequesteeId'
+                    Friend_RequesterId = '$item->Friend_RequesterId' AND
+                    Friend_RequesteeId = '$item->Friend_RequesteeId' AND
                     Status_Code = '$item->Status_Code'";
         return $this->dbManager->queryCustom($query);
     }
