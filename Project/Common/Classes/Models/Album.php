@@ -20,7 +20,7 @@ class Album
     {
         $this->Album_Id = $id;
         $this->Title = $title;
-        $this->AccessibilityCode = $accessibilityCode;
+        $this->Accessibility_Code = $accessibilityCode;
         $this->Description = $description;
         $this->Owner_Id = $ownerId;
         $this->Date_Updated = $dateUpdated;
