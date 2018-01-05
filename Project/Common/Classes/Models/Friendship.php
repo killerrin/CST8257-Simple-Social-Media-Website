@@ -21,12 +21,12 @@ class Friendship
     }
 
     public function GetUserRequester() {
-
+        return;
     }
     public function GetUserRequestee() {
-
+        return;
     }
     public function GetFriendshipStatus() {
-
+        return;
     }
 }

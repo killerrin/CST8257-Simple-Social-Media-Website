@@ -23,9 +23,9 @@ class Comment
     }
 
     public function GetUserAuthor() {
-
+        return;
     }
     public function GetPicture() {
-
+        return;
     }
 }
