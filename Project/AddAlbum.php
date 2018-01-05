@@ -25,8 +25,6 @@ if (!empty($_POST)) {
 }
 
 $dbManager->close();
-
-//TODO: validation
 ?>
 
     <div class="container">
