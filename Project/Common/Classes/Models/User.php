@@ -29,4 +29,23 @@ class User
     public static function VerifyPassword($password, $hash) {
         return password_verify($password, $hash);
     }
+
+    public function GetFriends(DBFriendshipRepository $repo) {
+        $friends = $repo->getAllForUser($this->User_Id);
+        $array = array();
+        foreach ($friends as $friend) {
+            if ($friend->Status_Code == "accepted")
+                array_push($array, $friend);
+        }
+        return $array;
+    }
+    public function GetRequestedFriends(DBFriendshipRepository $repo) {
+        $friends = $repo->getAllForUser($this->User_Id);
+        $array = array();
+        foreach ($friends as $friend) {
+            if ($friend->Status_Code == "request")
+                array_push($array, $friend);
+        }
+        return $array;
+    }
 }
