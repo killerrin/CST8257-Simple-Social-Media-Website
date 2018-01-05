@@ -30,7 +30,7 @@ class Album
         return;
     }
 
-    public function GetUserOwner() {
+    public function GetUserOwner(DBUserRepository $repo) {
         return;
     }
 }

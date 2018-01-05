@@ -25,7 +25,7 @@ class Picture
         $this->Date_Added = $dateAdded;
     }
 
-    public function GetAlbum() {
+    public function GetAlbum(DBAlbumRepository $repo) {
         return;
     }
 }

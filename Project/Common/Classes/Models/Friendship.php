@@ -20,10 +20,10 @@ class Friendship
         $this->Status_Code = $statusCode;
     }
 
-    public function GetUserRequester() {
+    public function GetUserRequester(DBUserRepository $repo) {
         return;
     }
-    public function GetUserRequestee() {
+    public function GetUserRequestee(DBUserRepository $repo) {
         return;
     }
     public function GetFriendshipStatus() {
