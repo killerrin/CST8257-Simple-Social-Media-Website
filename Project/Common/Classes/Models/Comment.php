@@ -22,7 +22,7 @@ class Comment
         $this->Comment_Text = $comment_Text;
     }
 
-    public function GetUserAuthor() {
+    public function GetUserAuthor(DBUserRepository $repo) {
         return;
     }
     public function GetPicture() {
