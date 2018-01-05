@@ -15,6 +15,10 @@ include_once("Classes/Models/Comment.php");
 include_once("Classes/DataAccess/DBManager.php");
 include_once("Classes/DataAccess/DBGenericRepository.php");
 include_once("Classes/DataAccess/Repositories/DBUserRepository.php");
+include_once("Classes/DataAccess/Repositories/DBAccessibilityRepository.php");
+include_once("Classes/DataAccess/Repositories/DBAlbumRepository.php");
+include_once("Classes/DataAccess/Repositories/DBFriendshipStatusRepository.php");
+include_once("Classes/DataAccess/Repositories/DBFriendshipRepository.php");
 
 // ================ Other =================
 //include_once("Classes/Image/Picture.php");
