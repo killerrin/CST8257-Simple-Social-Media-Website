@@ -23,7 +23,7 @@ class DBUserRepository extends DBGenericRepository
     }
 
     function getID($key) {
-        $result = $this->dbManager->queryByFilter($this->tableName, "StudentId", $key);
+        $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $key);
         return $this->parseQuery($result);
     }
 
