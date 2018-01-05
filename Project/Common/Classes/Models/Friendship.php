@@ -26,7 +26,7 @@ class Friendship
     public function GetUserRequestee(DBUserRepository $repo) {
         return;
     }
-    public function GetFriendshipStatus() {
+    public function GetFriendshipStatus(DBFriendshipStatusRepository $repo) {
         return;
     }
 }

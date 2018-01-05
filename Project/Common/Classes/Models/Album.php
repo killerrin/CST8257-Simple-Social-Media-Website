@@ -26,7 +26,7 @@ class Album
         $this->Date_Updated = $dateUpdated;
     }
 
-    public function GetAccessibility() {
+    public function GetAccessibility(DBAccessibilityRepository $repo) {
         return;
     }
 
