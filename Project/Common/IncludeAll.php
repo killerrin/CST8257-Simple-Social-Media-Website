@@ -19,6 +19,8 @@ include_once("Classes/DataAccess/Repositories/DBAccessibilityRepository.php");
 include_once("Classes/DataAccess/Repositories/DBAlbumRepository.php");
 include_once("Classes/DataAccess/Repositories/DBFriendshipStatusRepository.php");
 include_once("Classes/DataAccess/Repositories/DBFriendshipRepository.php");
+include_once("Classes/DataAccess/Repositories/DBCommentRepository.php");
+include_once("Classes/DataAccess/Repositories/DBPictureRepository.php");
 
 // ================ Other =================
 //include_once("Classes/Image/Picture.php");
