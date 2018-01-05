@@ -10,19 +10,20 @@ class Album
 {
     public $Album_Id;
     public $Title;
-    public $AccessibilityCode;
+    public $Accessibility_Code;
     public $Description;
     public $Date_Updated;
     public $Owner_Id;
 
 
-    public function __construct($id, $ownerId, $title, $accessibilityCode, $description)
+    public function __construct($id, $title, $description, $dateUpdated, $ownerId, $accessibilityCode)
     {
         $this->Album_Id = $id;
         $this->Title = $title;
         $this->AccessibilityCode = $accessibilityCode;
         $this->Description = $description;
         $this->Owner_Id = $ownerId;
+        $this->Date_Updated = $dateUpdated;
     }
 
     public function GetAccessibility() {
