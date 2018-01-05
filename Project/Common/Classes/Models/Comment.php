@@ -27,7 +27,7 @@ class Comment
     public function GetUserAuthor(DBUserRepository $repo) {
         return;
     }
-    public function GetPicture() {
+    public function GetPicture(DBPictureRepository $repo) {
         return;
     }
 }
