@@ -1,5 +1,5 @@
 <?php
-    include "../Common/Classes/Image/Picture.php";
+    //include "../Common/Classes/Image/Picture.php";
 
     $action = $_GET["action"];
     $filePath = '../'.$_GET["filePath"];
