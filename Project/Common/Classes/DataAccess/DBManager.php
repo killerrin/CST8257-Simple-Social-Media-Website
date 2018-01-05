@@ -71,5 +71,7 @@ class DBManager
         return $result;
     }
 
-
+    function escapeString($string) {
+        return $this->dbLink->real_escape_string($string);
+    }
 }
