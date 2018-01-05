@@ -21,12 +21,12 @@ class Friendship
     }
 
     public function GetUserRequester(DBUserRepository $repo) {
-        return;
+        return $repo->getID($this->Friend_RequesterId);
     }
     public function GetUserRequestee(DBUserRepository $repo) {
-        return;
+        return $repo->getID($this->Friend_RequesteeId);
     }
     public function GetFriendshipStatus(DBFriendshipStatusRepository $repo) {
-        return;
+        return $repo->getID($this->Status_Code);
     }
 }

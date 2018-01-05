@@ -25,9 +25,9 @@ class Comment
     }
 
     public function GetUserAuthor(DBUserRepository $repo) {
-        return;
+        return $repo->getID($this->Author_Id);
     }
     public function GetPicture(DBPictureRepository $repo) {
-        return;
+        return $repo->getID($this->Picture_Id);
     }
 }

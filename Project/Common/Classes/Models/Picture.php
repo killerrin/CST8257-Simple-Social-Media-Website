@@ -26,6 +26,6 @@ class Picture
     }
 
     public function GetAlbum(DBAlbumRepository $repo) {
-        return;
+        return $repo->getID($this->Album_Id);
     }
 }
