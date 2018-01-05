@@ -8,7 +8,7 @@
  * @version 1.0
  * @author andre
  */
-class Friendships
+class Friendship
 {
     public $Friend_RequesterId;
     public $Friend_RequesteeId;
