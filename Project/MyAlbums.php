@@ -82,7 +82,7 @@ $dbManager->close();
                         </select>
                     </td>
                     <td>
-                        <a href="?delete=<?php echo $album->Album_Id; ?>" onclick="return confirm('Are you sure you wish to delete the album <?php echo $album->Title; ?>?')">Delete</a>
+                        <a href="?delete=<?php echo $album->Album_Id; ?>" onclick="return confirm('Are you sure you wish to delete the album <?php echo $album->Title; ?> and all pictures in it?')">Delete</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
