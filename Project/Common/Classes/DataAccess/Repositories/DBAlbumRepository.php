@@ -35,7 +35,7 @@ class DBAlbumRepository extends DBGenericRepository
 //  Get Album by Album_Id
     function getID($key) {
         $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $this->dbManager->escapeString($key));
-        return $this->parseQuery($result);
+        return $this->parseQuery($result)[0];
     }
 
 //  Return true if success, else false

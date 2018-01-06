@@ -50,7 +50,7 @@ class DBFriendshipRepository extends DBGenericRepository
                     Friend_RequesteeId = '".$this->dbManager->escapeString($requesteeID)."' AND
                     Status_Code = '".$this->dbManager->escapeString($statusCode)."'";
         $result = $this->dbManager->queryCustom($query);
-        return $this->parseQuery($result);
+        return $this->parseQuery($result)[0];
     }
 
     //  Return true if success, else false
