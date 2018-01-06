@@ -147,11 +147,11 @@ class ImageManipulation
         $this->PictureRepo->delete($tmpPicture[0]);
     }
 
-    public function SavePicture($tmpFilePath, $fileName)
+    public function SavePicture($tmpFilePath, Picture $picture)
     {
-        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
-        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $fileName);
-        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $fileName);
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
+        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
+        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
 
         // Move the file out of the temporary location and into the Original Folder
         if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
@@ -188,6 +188,9 @@ class ImageManipulation
                     default:
                         return;
                 }
+
+                // Add the picture to the Database
+                $this->PictureRepo->insert($picture);
             }
         }
     }
