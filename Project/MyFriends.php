@@ -116,7 +116,7 @@ $dbManager->close();
                 $sharedAlbums = count($albumRepo->getAllForUserAccessibility($friend->User_Id, 'shared'));
                 ?>
                 <tr>
-                    <td><?php echo $friend->Name; ?></td>
+                    <td><a href="FriendPictures.php?id=<?php echo $friend->User_Id; ?>"><?php echo $friend->Name; ?></a></td>
                     <td><?php echo $sharedAlbums; ?></td>
                     <td><input type="checkbox" required name="defriend[]" value="<?php echo $friend->User_Id; ?>" /></td>
                 </tr>
