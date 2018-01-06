@@ -1,0 +1,72 @@
+
+<?php include "Common/Header.php"; ?>
+<?php session_start(); ?>
+<?php
+$LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
+
+if (!empty($_POST)) {
+    $friendId = $_POST['friendID'];
+    $errorMessage;
+    if (!isset($friendId)) {
+        $errorMessage = "Friend ID is required!";
+    }
+    elseif ($friendId == $LoggedInUser->User_Id) {
+        $errorMessage = "You cannot send a friend request to yourself!";
+    }
+    if (!isset($errorMessage)) {
+        $dbManager = new DBManager();
+        $dbManager->connect();
+        $userRepo = new DBUserRepository($dbManager);
+        $friendRepo = new DBFriendshipRepository($dbManager);
+
+        $friend = $userRepo->getID($friendId);
+        if ($friend == null) {
+            $errorMessage = "User $friendId does not exist!";
+        }
+
+        if (Friendship::AreUsersFriends($friendRepo, $LoggedInUser, $friend)) {
+            $errorMessage = "You are already friends!";
+        }
+
+        if (!isset($errorMessage)) {
+            $friendship = $friendRepo->getID($friend, $LoggedInUser, 'request');
+            if (!empty($friendship)) {
+                $friendship->Status_Code = 'accepted';
+                $friendRepo->update($friendship);
+            }
+            else {
+                $friendship = new Friendship($LoggedInUser->User_Id, $friend->User_Id, 'request');
+            }
+        }
+    }
+}
+?>
+
+    <div class="container">
+        <h1>Add Friend</h1>
+        <p>
+            Welcome
+            <strong>
+                <?php echo $LoggedInUser->Name; ?>!
+            </strong>(not you? change user
+            <a href="Logout.php">here</a>)
+        </p>
+        <p>Enter the ID of the user you would like to be friends with:</p>
+        <br />
+        <?php if (isset($errorMessage)): ?>
+        <div class="alert alert-danger">
+            <p><span class="glyphicon glyphicon-thumbs-down"></span> <?php echo $errorMessage; ?></p>
+        </div>
+        <?php endif; ?>
+        <form action="AddFriend.php" method="post" class="form-inline center-block">
+            <div class="form-group">
+                <label for="friendId">ID:</label>
+                <input type="text" class="form-control" id="friendId" placeholder="Friend ID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Send Friend Request" />
+            </div>
+        </form>
+    </div>
+
+<?php include "Common/Footer.php"; ?>
