@@ -144,7 +144,7 @@ class ImageManipulation
 
         // Remove from DB
         $tmpPicture = $this->PictureRepo->getAlbumFilename($this->Album_Id, $fileName);
-        $this->PictureRepo->delete($tmpPicture);
+        $this->PictureRepo->delete($tmpPicture[0]);
     }
 
 
