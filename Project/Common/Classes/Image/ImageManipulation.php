@@ -159,22 +159,19 @@ class ImageManipulation
         return false;
     }
 
+    public function RotateImage($imageResource, float $rotationAngle) {
+        return imagerotate($imageResource, $rotationAngle, 0);
+    }
+    public function ScaleImage($imageResource, int $newWidth, int $newHeight = -1, int $mode = IMG_BILINEAR_FIXED) {
+        return imagescale($imageResource, $newWidth, $newHeight, $mode);
+    }
+    public function ResizeImage($imageResource, int $newWidth, int $newHeight) {
+        $originalWidth = imagesx($imageResource);
+        $originalHeight = imagesY($imageResource);
 
-    public function DeletePictures($fileName)
-    {
-        // Get the files
-        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
-        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $fileName);
-        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $fileName);
-
-        // Delete the files
-        unlink($originalFilePath);
-        unlink($galleryFilePath);
-        unlink($albumThumbnailFilePath);
-
-        // Remove from DB
-        $tmpPicture = $this->PictureRepo->getAlbumFilename($this->Album_Id, $fileName);
-        $this->PictureRepo->delete($tmpPicture[0]);
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($newImage, $imageResource, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+        return $newImage;
     }
 
     public function SavePictures($tmpFilePath, Picture $picture)
@@ -182,7 +179,7 @@ class ImageManipulation
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
         $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
-        
+
         // Copy/Move the file out of the temporary location and into the Original Folder
         if ($this->CopyImageAndSave($tmpFilePath, $originalFilePath)) { //if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
             // Gather Image Information for further steps
@@ -223,6 +220,23 @@ class ImageManipulation
                 $this->PictureRepo->insert($picture);
             }
         }
+    }
+
+    public function DeletePictures($fileName)
+    {
+        // Get the files
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
+        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $fileName);
+        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $fileName);
+
+        // Delete the files
+        unlink($originalFilePath);
+        unlink($galleryFilePath);
+        unlink($albumThumbnailFilePath);
+
+        // Remove from DB
+        $tmpPicture = $this->PictureRepo->getAlbumFilename($this->Album_Id, $fileName);
+        $this->PictureRepo->delete($tmpPicture[0]);
     }
 
     public function DownloadPicture($fileName) {
