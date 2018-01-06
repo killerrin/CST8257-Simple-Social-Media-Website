@@ -26,6 +26,7 @@
     <Compile Include="Common\Classes\DataAccess\Repositories\DBAlbumRepository.php" />
     <Compile Include="Common\Classes\DataAccess\Repositories\DBPictureRepository.php" />
     <Compile Include="Common\Classes\DataAccess\Repositories\DBUserRepository.php" />
+    <Compile Include="Common\Classes\Image\ImageManipulation.php" />
     <Compile Include="Common\Classes\Image\Picture.php" />
     <Compile Include="Common\Classes\Models\Accessibility.php" />
     <Compile Include="Common\Classes\Models\Album.php" />

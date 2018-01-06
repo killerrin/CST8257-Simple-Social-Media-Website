@@ -24,6 +24,7 @@ include_once("Classes/DataAccess/Repositories/DBPictureRepository.php");
 
 // ================ Other =================
 //include_once("Classes/Image/Picture.php");
+include_once("Classes/Image/ImageManipulation.php");
 
 // ================================================================================
 // Start the Session in the Header since the header is included in all the pages

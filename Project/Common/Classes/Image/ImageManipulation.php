@@ -10,14 +10,14 @@
  */
 class ImageManipulation
 {
-    public const BASE_FOLDER = "Pictures";
-    public const ORIGINAL_FOLDER = "Original";
-    public const ALBUM_FOLDER = "Album";
-    public const THUMBNAIL_FOLDER = "Thumbnail";
-    public const THUMBNAIL_WIDTH = 100;
-    public const THUMBNAIL_HEIGHT = 100;
-    public const ALBUM_WIDTH = 1024;
-    public const ALBUM_HEIGHT = 800;
+    const BASE_FOLDER = "Pictures";
+    const ORIGINAL_FOLDER = "Original";
+    const ALBUM_FOLDER = "Album";
+    const THUMBNAIL_FOLDER = "Thumbnail";
+    const THUMBNAIL_WIDTH = 100;
+    const THUMBNAIL_HEIGHT = 100;
+    const ALBUM_WIDTH = 1024;
+    const ALBUM_HEIGHT = 800;
 
     public $User;
 
@@ -27,17 +27,17 @@ class ImageManipulation
     }
 
     public function CreateFolderStructure() {
-        $rootPath = "../../../".$this->GetRootFolder();
-        if (!is_dir($rootPath)) { mkdir($rootPath); }
+        $rootPath = $this->GetRootFolder();
+        if (!is_dir($rootPath)) { mkdir($rootPath, 0755, true); }
 
-        $originalPath = "../../../".$this->GetOriginalFolder();
-        if (!is_dir($originalPath)) { mkdir($originalPath); }
+        $originalPath = $this->GetOriginalFolder();
+        if (!is_dir($originalPath)) { mkdir($originalPath, 0755, true); }
 
-        $albumPath = "../../../".$this->GetAlbumFolder();
-        if (!is_dir($albumPath)) { mkdir($albumPath); }
+        $albumPath = $this->GetAlbumFolder();
+        if (!is_dir($albumPath)) { mkdir($albumPath, 0755, true); }
 
-        $thumbPath = "../../../".$this->GetThumbnailFolder();
-        if (!is_dir($thumbPath)) { mkdir($thumbPath); }
+        $thumbPath = $this->GetThumbnailFolder();
+        if (!is_dir($thumbPath)) { mkdir($thumbPath, 0755, true); }
     }
 
     public function GetRootFolder() {
@@ -52,5 +52,7 @@ class ImageManipulation
     public function GetThumbnailFolder() {
         return ImageManipulation::BASE_FOLDER."/".$this->User->User_Id."/".THUMBNAIL_FOLDER;
     }
+
+
 
 }
