@@ -16,8 +16,8 @@ class ImageManipulation
     const THUMBNAIL_FOLDER = "Thumbnail";
     const THUMBNAIL_WIDTH = 100;
     const THUMBNAIL_HEIGHT = 100;
-    const ALBUM_WIDTH = 1024;
-    const ALBUM_HEIGHT = 800;
+    const GALLERY_WIDTH = 1024;
+    const GALLERY_HEIGHT = 800;
 
     // File Organization
     public $User_Id;
@@ -147,5 +147,48 @@ class ImageManipulation
         $this->PictureRepo->delete($tmpPicture[0]);
     }
 
+    public function SavePicture($tmpFilePath, $fileName)
+    {
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
+        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $fileName);
+        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $fileName);
 
+        // Move the file out of the temporary location and into the Original Folder
+        if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
+            // Gather Image Information for further steps
+            $imageInfo = getimagesize($originalFilePath);
+            if ($imageInfo) {
+                // Load the Image
+                $originalImage = $this->GetImageData($originalFilePath);
+                $originalWidth = imagesx($originalImage);
+                $originalHeight = imagesY($originalImage);
+
+                // Create the Thumbnail and put in folder
+                $thumbnailImage = imagecreatetruecolor(THUMB_MAX_WIDTH, THUMB_MAX_HEIGHT);
+                imagecopyresampled($thumbnailImage, $originalImage, 0, 0, 0, 0, ImageManipulation::THUMBNAIL_WIDTH, ImageManipulation::THUMBNAIL_HEIGHT, $originalWidth, $originalHeight);
+
+                // Create the Album and put in folder
+                $albumImage = imagecreatetruecolor(IMAGE_MAX_WIDTH, IMAGE_MAX_HEIGHT);
+                imagecopyresampled($albumImage, $originalImage, 0, 0, 0, 0, ImageManipulation::GALLERY_WIDTH, ImageManipulation::GALLERY_HEIGHT, $originalWidth, $originalHeight);
+
+                // Save the Image
+                switch ($imageInfo[2]) {
+                    case IMAGETYPE_PNG:
+                        imagepng($albumImage, $galleryFilePath);
+                        imagepng($thumbnailImage, $albumThumbnailFilePath);
+                        break;
+                    case IMAGETYPE_JPEG:
+                        imagejpeg($albumImage, $galleryFilePath);
+                        imagejpeg($thumbnailImage, $albumThumbnailFilePath);
+                        break;
+                    case IMAGETYPE_GIF:
+                        imagegif($albumImage, $galleryFilePath);
+                        imagegif($thumbnailImage, $albumThumbnailFilePath);
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+    }
 }
