@@ -10,6 +10,40 @@ $dbManager->connect();
 $friendRepo = new DBFriendshipRepository($dbManager);
 $userRepo = new DBUserRepository($dbManager);
 
+if (!empty($_POST)) {
+    if (isset($_POST['defriend'])) {
+        foreach ($_POST['defriend'] as $value) {
+            $friendship = (function($userId, $friendId, $repo) : Friendship {
+                $friendship = $repo->getID($userId, $friendId, 'accepted');
+                if ($friendship == null) {
+                    $friendship = $repo->getID($friendId, $userId, 'accepted');
+                }
+                return $friendship;
+            })($LoggedInUser->User_Id, $value, $friendRepo);
+            $deleteResult = $friendRepo->delete($friendship);
+        }
+    }
+    if (!empty($_POST['accept']) || !empty($_POST['reject'])) {
+        if (!isset($_POST['request'])) {
+            $requestResult = false;
+            return;
+        }
+        if (!isset($requestResult) && isset($_POST['accept'])) {
+            foreach($_POST['request'] as $requesterId) {
+                $request = $friendRepo->getID($requesterId, $LoggedInUser->User_Id, 'request');
+                $request->Status_Code = 'accepted';
+                $requestResult = $friendRepo->update($request) ? "accepted" : false;
+            }
+        }
+        if (!isset($requestResult) && isset($_POST['reject'])) {
+            foreach($_POST['request'] as $requesterId) {
+                $request = $friendRepo->getID($requesterId, $LoggedInUser->User_Id, 'request');
+                $requestResult = $friendRepo->delete($request) ? "rejected" : false;
+            }
+        }
+    }
+}
+
 $friendships = $friendRepo->getAllForUser($LoggedInUser->User_Id);
 
 $friends = (function ($friendships, $userId, $userRepo) {
@@ -48,6 +82,16 @@ $dbManager->close();
         </strong>(not you? change user
         <a href="Logout.php">here</a>)
     </p>
+    <?php if (isset($deleteResult) && $deleteResult): ?>
+    <div class="alert-success alert">
+        <p><span class="glyphicon-thumbs-up glyphicon"></span> Friend successfully removed!</p>
+    </div>
+    <?php endif; ?>
+    <?php if (isset($deleteResult) && !$deleteResult): ?>
+    <div class="alert-danger alert">
+        <p><span class="glyphicon glyphicon-thumbs-down"></span> An error occurred!</p>
+    </div>
+    <?php endif; ?>
     <div class="col-xs-3">
         <p>Friends:</p>
     </div>
@@ -74,7 +118,7 @@ $dbManager->close();
                 <tr>
                     <td><?php echo $friend->Name; ?></td>
                     <td><?php echo $sharedAlbums; ?></td>
-                    <td><input type="checkbox" name="defriend[]" value="<?php echo $friend->User_Id; ?>" /></td>
+                    <td><input type="checkbox" required name="defriend[]" value="<?php echo $friend->User_Id; ?>" /></td>
                 </tr>
             <?php endforeach; ?>
             <?php if (count($friends) == 0): ?>
@@ -84,9 +128,20 @@ $dbManager->close();
             <?php endif; ?>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary col-xs-offset-10" value="Defriend Selected" />
+        <input type="submit" class="btn btn-primary col-xs-offset-10" value="Defriend Selected" <?php echo (count($friends) == 0) ? "disabled" : ""; ?> />
     </form>
     <br />
+    <?php if (isset($requestResult)): ?>
+        <div class="alert-success alert">
+            <p><span class="glyphicon-thumbs-up glyphicon"></span> Friend request successfully <?php echo $requestResult; ?>!</p>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($requestResult) && !$requestResult): ?>
+        <div class="alert-danger alert">
+            <p><span class="glyphicon glyphicon-thumbs-down"></span> An error occurred!</p>
+        </div>
+    <?php endif; ?>
+    <p>Friend Requests:</p>
     <form action="MyFriends.php" method="post">
         <table class="table">
             <thead>
@@ -96,12 +151,12 @@ $dbManager->close();
             </tr>
             </thead>
             <tbody>
-            <?php foreach($requests as $request): ?>
+            <?php $dbManager->connect(); foreach($requests as $request): ?>
                 <tr>
-                    <td><?php $dbManager->connect(); echo $userRepo->getID($request->Friend_RequesterId)->Name; ?></td>
+                    <td><?php $userRepo = new DBUserRepository($dbManager); echo $userRepo->getID($request->Friend_RequesterId)->Name; ?></td>
                     <td><input type="checkbox" name="request[]" value="<?php echo $request->Friend_RequesterId; ?>" /></td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endforeach; $dbManager->close(); ?>
             <?php if (count($requests) == 0): ?>
                 <tr>
                     <td colspan="3" align="center">There are no friend requests to display!</td>
@@ -109,8 +164,8 @@ $dbManager->close();
             <?php endif; ?>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary col-xs-offset-9" name="accept" value="Accept Selected" />
-        <input type="submit" class="btn btn-danger" name="reject" value="Reject Selected" />
+        <input type="submit" class="btn btn-primary col-xs-offset-9" name="accept" value="Accept Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> />
+        <input type="submit" class="btn btn-danger" name="reject" value="Reject Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> />
     </form>
 </div>
 
