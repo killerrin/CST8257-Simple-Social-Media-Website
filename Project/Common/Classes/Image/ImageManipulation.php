@@ -47,9 +47,9 @@ class ImageManipulation
     public function GetRootFolder() : string { return ImageManipulation::BASE_FOLDER; }
     public function GetRootUserFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id; }
     public function GetRootAlbumFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id; }
-    public function GetOriginalFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".ORIGINAL_FOLDER; }
-    public function GetGalleryFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".GALLERY_FOLDER; }
-    public function GetThumbnailFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".THUMBNAIL_FOLDER; }
+    public function GetOriginalFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".ImageManipulation::ORIGINAL_FOLDER; }
+    public function GetGalleryFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".ImageManipulation::GALLERY_FOLDER; }
+    public function GetThumbnailFolder() : string { return ImageManipulation::BASE_FOLDER."/".$this->User_Id."/".$this->Album_Id."/".ImageManipulation::THUMBNAIL_FOLDER; }
     public function CreateFilePath($folderPath, $fileName) : string { return $folderPath."/".$fileName; }
     public function CreateFolderStructure()
     {
@@ -60,7 +60,6 @@ class ImageManipulation
         if (!is_dir($rootPath)) { mkdir($rootPath, 0755, true); }
         if (!is_dir($rootUserPath)) { mkdir($rootUserPath, 0755, true); }
         if (!is_dir($rootAlbumPath)) { mkdir($rootAlbumPath, 0755, true); }
-
 
         // Create Internal Seperators
         $originalPath = $this->GetOriginalFolder();

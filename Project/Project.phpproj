@@ -39,6 +39,7 @@
     <Compile Include="Common\Header.php" />
     <Compile Include="Common\IncludeAll.php" />
     <Compile Include="API\DisplayPicture.php" />
+    <Compile Include="FriendPictures.php" />
     <Compile Include="MyFriends.php" />
     <Compile Include="MyAlbums.php" />
     <Compile Include="MyPictures.php" />
