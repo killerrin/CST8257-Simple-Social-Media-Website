@@ -61,7 +61,7 @@ if (!empty($_POST)) {
         <?php endif; ?>
         <?php if (isset($success)): ?>
         <div class="alert alert-success">
-            <p><span class="glyphicon glyphicon-thumbs-up"></span> Friend Request sent successfully!</p>
+            <p><span class="glyphicon glyphicon-thumbs-up"></span> Your friend request has been sent to <?php echo "$friend->Name (ID: $friend->User_Id). Once $friend->Name accepts your request, you and $friend->Name will be friends and be able to view each other's shared albums."; ?></p>
         </div>
         <?php endif; ?>
         <form action="AddFriend.php" method="post" class="form-inline center-block">
