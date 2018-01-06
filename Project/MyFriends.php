@@ -128,7 +128,7 @@ $dbManager->close();
             <?php endif; ?>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary col-xs-offset-10" value="Defriend Selected" <?php echo (count($friends) == 0) ? "disabled" : ""; ?> />
+        <input type="submit" class="btn btn-primary col-xs-offset-10" value="Defriend Selected" <?php echo (count($friends) == 0) ? "disabled" : ""; ?> onclick="return confirm('Are you sure you want to delete the selected friends?')" />
     </form>
     <br />
     <?php if (isset($requestResult)): ?>
@@ -165,7 +165,7 @@ $dbManager->close();
             </tbody>
         </table>
         <input type="submit" class="btn btn-primary col-xs-offset-9" name="accept" value="Accept Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> />
-        <input type="submit" class="btn btn-danger" name="reject" value="Reject Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> />
+        <input type="submit" class="btn btn-danger" name="reject" value="Reject Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> onclick="return confirm('Are you sure you want reject the selected friend requests?')" />
     </form>
 </div>
 
