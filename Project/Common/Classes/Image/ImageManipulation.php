@@ -21,9 +21,12 @@ class ImageManipulation
 
     public $User;
 
-    public function __construct(User $user) {
+    public function __construct(User $user, $createFolders) {
         $this->User = $user;
-        $this->CreateFolderStructure();
+
+        if ($createFolders) {
+            $this->CreateFolderStructure();
+        }
     }
 
     public function CreateFolderStructure() {
