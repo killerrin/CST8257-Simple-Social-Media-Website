@@ -191,4 +191,36 @@ class ImageManipulation
             }
         }
     }
+
+    public function DownloadPicture($fileName) {
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
+        $fileName = basename($originalFilePath);
+        $fileLength = filesize($originalFilePath);
+
+        $this->mime = (function() {
+            switch($this->imageSize[2]) {
+                case IMAGETYPE_JPEG:
+                    return 'image/jpeg';
+                case IMAGETYPE_GIF:
+                    return 'image/gif';
+                case IMAGETYPE_PNG:
+                    return 'image/png';
+                default:
+                    return 'application/octet-stream';
+            }
+        })();
+
+        header("Content-Type: $this->mime");
+        header("Content-Disposition: attachment; filename = \"$fileName\" ");
+        header("Content-Length: $fileLength" );
+        header("Content-Description: File Transfer");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate");
+        header("Pragma: private");
+
+        ob_clean();
+        flush();
+        readfile($filePath);
+        flush();
+    }
 }
