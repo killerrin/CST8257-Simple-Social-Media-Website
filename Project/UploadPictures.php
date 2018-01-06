@@ -16,9 +16,13 @@ if (!empty($_POST)) {
     if (empty($_POST['album']) || empty($_FILES['file']) || empty($_POST['title']) || empty($_POST['description']))
         $emptyFieldError = true;
     if (!$emptyFieldError) {
-        foreach($_FILES['file']['name'] as $index => $value) {
+        $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $_POST['album'], $dbManager, true);
+        var_dump($_FILES);
+        foreach ((array) $_FILES['file']['name'] as $index => $value) {
+            $imageManipulation->SavePictures(((array) $_FILES['file']['tmp_name'])[$index], new Picture(null, $_POST['album'], $value, $_POST['title'], $_POST['description'], date('Y-m-d H:i:s')));
 
         }
+        $uploadSUccess = true;
     }
 }
 
@@ -45,7 +49,12 @@ $dbManager->close();
         <p><span class="glyphicon glyphicon-thumbs-down"></span> All fields are required!</p>
     </div>
     <?php endif; ?>
-    <form action="UploadPictures.php" class="form-horizontal" method="post">
+    <?php if ($uploadSUccess): ?>
+    <div class="alert alert-success">
+        <p><span class="glyphicon glyphicon-thumbs-up"></span> Pictures uploaded successfully!</p>
+    </div>
+    <?php endif; ?>
+    <form action="UploadPictures.php" class="form-horizontal" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-xs-3 control-label" for="album">Upload to Album:</label>
             <div class="col-xs-9">
@@ -62,7 +71,7 @@ $dbManager->close();
         <div class="form-group">
             <label class="col-xs-3 control-label" for="file">File to Upload:</label>
             <div class="col-xs-9">
-                <input type="file" id="file" name="file[]" multiple accept="image/png, image/jpeg, image/gif" />
+                <input type="file" id="file" name="file" multiple accept="image/png, image/jpeg, image/gif" />
             </div>
         </div>
         <div class="form-group">
