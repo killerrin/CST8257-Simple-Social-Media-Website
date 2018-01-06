@@ -130,6 +130,36 @@ class ImageManipulation
         return NULL;
     }
 
+    public function CopyImageAndSave($originalFilePath, $savePath) : bool
+    {
+        // Copy the Image
+        $newImage = $this->CopyImage($originalFilePath);
+        if ($newImage == NULL) return false;
+
+        // Save the Image
+        $imageInfo = getimagesize($originalFilePath);
+        if ($imageInfo) {
+            switch ($imageInfo[2]) {
+                case IMAGETYPE_PNG:
+                    imagepng($newImage, $savePath);
+                    break;
+                case IMAGETYPE_JPEG:
+                    imagejpeg($newImage, $savePath);
+                    break;
+                case IMAGETYPE_GIF:
+                    imagegif($newImage, $savePath);
+                    break;
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+
     public function DeletePictures($fileName)
     {
         // Get the files
@@ -147,14 +177,14 @@ class ImageManipulation
         $this->PictureRepo->delete($tmpPicture[0]);
     }
 
-    public function SavePicture($tmpFilePath, Picture $picture)
+    public function SavePictures($tmpFilePath, Picture $picture)
     {
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
         $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
-
-        // Move the file out of the temporary location and into the Original Folder
-        if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
+        
+        // Copy/Move the file out of the temporary location and into the Original Folder
+        if ($this->CopyImageAndSave($tmpFilePath, $originalFilePath)) { //if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
             // Gather Image Information for further steps
             $imageInfo = getimagesize($originalFilePath);
             if ($imageInfo) {

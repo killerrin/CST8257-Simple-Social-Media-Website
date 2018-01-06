@@ -1,20 +1,17 @@
 <?php
-    //include "../Common/Classes/Image/Picture.php";
+    include_once("../Common/IncludeAll.php");
 
-    $action = $_GET["action"];
-    $filePath = '../'.$_GET["filePath"];
+    $action = $_GET["action"];          //echo "<p>$action</p>";
+    $filePath = $_GET["filePath"];      //echo "<p>$filePath</p>";
 
-    //echo "<p>$action</p>";
-    //echo "<p>$filePath</p>";
+    if(!isset($fileName)) { return; }
 
-    if(!isset($filePath))
-    {
-        return;
-    }
+    $dbManager = new DBManager();
+    $imageManipulation = new ImageManipulation($userID, $albumID, $dbManager, false);
 
-    $fileName = Picture::getFileNameFromPath($filePath);
-    $imageType = Picture::getImageType($filePath);
-    $newImage = Picture::copyImage($filePath);
+    $fileName = $imageManipulation->GetFileNameFromPath($filePath);
+    $imageType = $imageManipulation->GetImageType($filePath);
+    $newImage = $imageManipulation->CopyImage($filePath);
 
     //echo "<p>$fileName</p>";
     //echo "<p>$imageType</p>";
