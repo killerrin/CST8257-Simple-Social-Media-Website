@@ -24,7 +24,7 @@ class DBUserRepository extends DBGenericRepository
 
     function getID($key) {
         $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $this->dbManager->escapeString($key));
-        return $this->parseQuery($result);
+        return $this->parseQuery($result)[0];
     }
 
     // Return True of Success, False if failed

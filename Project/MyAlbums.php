@@ -15,7 +15,7 @@ $accessibilityMode = $accessibilityRepo->getAll();
 // Handle form submission
 if (!empty($_POST)) {
     foreach ($_POST['albumId'] as $index => $value) {
-        $newAlbum = $albumRepo->getID($value)[0];
+        $newAlbum = $albumRepo->getID($value);
         $newAlbum->Accessibility_Code = $_POST['newAccessibility'][$index];
         $result = $albumRepo->update($newAlbum);
     }
@@ -23,7 +23,7 @@ if (!empty($_POST)) {
 
 // Handle delete request
 if (isset($_GET['delete'])) {
-    $result = $albumRepo->delete($albumRepo->getID($_GET['delete'])[0]);
+    $result = $albumRepo->delete($albumRepo->getID($_GET['delete']));
 }
 
 // self executing function fetches albums and filters without polluting the global namespace 8^)

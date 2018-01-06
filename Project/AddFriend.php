@@ -5,7 +5,7 @@
 $LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
 
 if (!empty($_POST)) {
-    $friendId = $_POST['friendID'];
+    $friendId = $_POST['friendId'];
     $errorMessage;
     if (!isset($friendId)) {
         $errorMessage = "Friend ID is required!";
@@ -24,18 +24,19 @@ if (!empty($_POST)) {
             $errorMessage = "User $friendId does not exist!";
         }
 
-        if (Friendship::AreUsersFriends($friendRepo, $LoggedInUser, $friend)) {
+        if (!isset($errorMessage) && Friendship::AreUsersFriends($friendRepo, $LoggedInUser, $friend)) {
             $errorMessage = "You are already friends!";
         }
 
         if (!isset($errorMessage)) {
-            $friendship = $friendRepo->getID($friend, $LoggedInUser, 'request');
+            $friendship = $friendRepo->getID($friend->User_Id, $LoggedInUser->User_Id, 'request');
             if (!empty($friendship)) {
                 $friendship->Status_Code = 'accepted';
-                $friendRepo->update($friendship);
+                $success =$friendRepo->update($friendship);
             }
             else {
                 $friendship = new Friendship($LoggedInUser->User_Id, $friend->User_Id, 'request');
+                $success = $friendRepo->insert($friendship);
             }
         }
     }
@@ -58,10 +59,15 @@ if (!empty($_POST)) {
             <p><span class="glyphicon glyphicon-thumbs-down"></span> <?php echo $errorMessage; ?></p>
         </div>
         <?php endif; ?>
+        <?php if (isset($success)): ?>
+        <div class="alert alert-success">
+            <p><span class="glyphicon glyphicon-thumbs-up"></span> Friend Request sent successfully!</p>
+        </div>
+        <?php endif; ?>
         <form action="AddFriend.php" method="post" class="form-inline center-block">
             <div class="form-group">
                 <label for="friendId">ID:</label>
-                <input type="text" class="form-control" id="friendId" placeholder="Friend ID" />
+                <input type="text" class="form-control" name="friendId" id="friendId" placeholder="Friend ID" />
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Send Friend Request" />

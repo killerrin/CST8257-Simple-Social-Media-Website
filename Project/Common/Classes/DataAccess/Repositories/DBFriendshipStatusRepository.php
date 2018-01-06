@@ -36,7 +36,7 @@ class DBFriendshipStatusRepository extends DBGenericRepository
     //  Get Accessibility by Status_Code
     function getID($key) {
         $result = $this->dbManager->queryByFilter($this->tableName, "Status_Code", $this->dbManager->escapeString($key));
-        return $this->parseQuery($result);
+        return $this->parseQuery($result)[0];
     }
 
     //  Return true if success, else false
