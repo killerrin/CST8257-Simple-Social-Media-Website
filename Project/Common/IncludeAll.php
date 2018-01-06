@@ -1,6 +1,8 @@
 <?php
 // Include important pages here
 // ================================================================================
+$supportedImageTypes = array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG);
+date_default_timezone_set("America/Toronto");
 
 // ================ Models ================
 include_once("Classes/Models/Accessibility.php");
