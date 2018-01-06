@@ -56,15 +56,15 @@ class DBFriendshipRepository extends DBGenericRepository
     //  Return true if success, else false
     function insert(Friendship $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES('".$this->dbManager->escapeString($item->Friend_RequesterId)."', '".$this->dbManager->escapeString($item->Friend_RequesteeId)."', 'Status_Code')";
+                  VALUES('".$this->dbManager->escapeString($item->Friend_RequesterId)."', '".$this->dbManager->escapeString($item->Friend_RequesteeId)."', '".$this->dbManager->escapeString($item->Status_Code)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     function update(Friendship $item) {
         $query = "UPDATE $this->tableName
-                  SET Friend_RequesterId = '".$this->dbManager->escapeString($item->Friend_RequesterId)."', Friend_RequesteeId = '".$this->dbManager->escapeString($item->Friend_RequesteeId)."', Status_Code = '".$this->dbManager->escapeString($item->Status_Code)."'
-                  WHERE Status_Code = '".$this->dbManager->escapeString($item->Status_Code)."'";
+                  SET Status_Code = '".$this->dbManager->escapeString($item->Status_Code)."'
+                  WHERE Friend_RequesterId = '".$this->dbManager->escapeString($item->Friend_RequesterId)."' AND Friend_RequesteeId = '".$this->dbManager->escapeString($item->Friend_RequesteeId)."'";
         return $this->dbManager->queryCustom($query);
     }
 
