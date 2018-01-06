@@ -28,7 +28,6 @@
     <Compile Include="Common\Classes\DataAccess\Repositories\DBPictureRepository.php" />
     <Compile Include="Common\Classes\DataAccess\Repositories\DBUserRepository.php" />
     <Compile Include="Common\Classes\Image\ImageManipulation.php" />
-    <Compile Include="Common\Classes\Image\Picture.php" />
     <Compile Include="Common\Classes\Models\Accessibility.php" />
     <Compile Include="Common\Classes\Models\Album.php" />
     <Compile Include="Common\Classes\Models\Comment.php" />
@@ -36,7 +35,6 @@
     <Compile Include="Common\Classes\Models\FriendshipStatus.php" />
     <Compile Include="Common\Classes\Models\Picture.php" />
     <Compile Include="Common\Classes\Models\User.php" />
-    <Compile Include="Common\ConstraintsAndSettings.php" />
     <Compile Include="Common\Footer.php" />
     <Compile Include="Common\Header.php" />
     <Compile Include="Common\IncludeAll.php" />
