@@ -39,6 +39,7 @@ if (!empty($_POST)) {
                 $success = $friendRepo->insert($friendship);
             }
         }
+        $dbManager->close();
     }
 }
 ?>
