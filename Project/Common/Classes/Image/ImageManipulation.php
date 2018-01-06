@@ -194,7 +194,6 @@ class ImageManipulation
 
     public function DownloadPicture($fileName) {
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
-        $fileName = basename($originalFilePath);
         $fileLength = filesize($originalFilePath);
 
         $this->mime = (function() {
