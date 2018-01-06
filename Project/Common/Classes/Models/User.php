@@ -48,4 +48,13 @@ class User
         }
         return $array;
     }
+    public function GetIncommingFriendRequests(DBFriendshipRepository $repo) {
+        $friends = $repo->getAllForUser($this->User_Id);
+        $array = array();
+        foreach ($friends as $friend) {
+            if ($friend->Status_Code == "request" && $friend->Friend_RequesteeId == $this->User_Id)
+                array_push($array, $friend);
+        }
+        return $array;
+    }
 }
