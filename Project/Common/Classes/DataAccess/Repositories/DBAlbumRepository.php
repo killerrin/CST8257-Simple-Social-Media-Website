@@ -32,6 +32,15 @@ class DBAlbumRepository extends DBGenericRepository
         return $this->parseQuery($result);
     }
 
+    public function getAllForUser($userId)
+    {
+        $query = "SELECT * FROM $this->tableName
+                  WHERE
+                    Owner_Id = '".$this->dbManager->escapeString($userId)."'";
+        $result = $this->dbManager->queryCustom($query);
+        return $this->parseQuery($result);
+    }
+
 //  Get Album by Album_Id
     function getID($key) {
         $result = $this->dbManager->queryByFilter($this->tableName, "Album_Id", $this->dbManager->escapeString($key));
