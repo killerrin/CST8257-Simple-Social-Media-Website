@@ -32,10 +32,20 @@ class DBPictureRepository extends DBGenericRepository
         return $this->parseQuery($result);
     }
 
-    //  Get Accessibility by Accessibility_Code
+    //  Get Picture by Picture_Id
     function getID($key) {
         $result = $this->dbManager->queryByFilter($this->tableName, "Picture_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
+    }
+
+    public function getAlbumFilename($albumID, $fileName)
+    {
+        $query = "SELECT * FROM $this->tableName
+                  WHERE
+                    Album_Id = ".$this->dbManager->escapeString($albumID)." AND
+                    FileName = '".$this->dbManager->escapeString($fileName)."'";
+        $result = $this->dbManager->queryCustom($query);
+        return $this->parseQuery($result);
     }
 
     //  Return true if success, else false

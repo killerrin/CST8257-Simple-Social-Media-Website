@@ -141,6 +141,11 @@ class ImageManipulation
         unlink($originalFilePath);
         unlink($galleryFilePath);
         unlink($albumThumbnailFilePath);
+
+        // Remove from DB
+        $tmpPicture = $this->PictureRepo->getAlbumFilename($this->Album_Id, $fileName);
+        $this->PictureRepo->delete($tmpPicture);
     }
+
 
 }
