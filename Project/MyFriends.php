@@ -42,6 +42,18 @@ if (!empty($_POST)) {
             }
         }
     }
+    if (!empty($_POST['deleteOutgoing'])) {
+        if (!isset($_POST['outgoingRequest'])) {
+            $outgoingRequestResult = false;
+            return;
+        }
+        if (!isset($outgoingRequestResult) && isset($_POST['deleteOutgoing'])) {
+            foreach($_POST['outgoingRequest'] as $requesteeId) {
+                $outgoingRequest = $friendRepo->getID($LoggedInUser->User_Id, $requesteeId, 'request');
+                $outgoingRequestResult = $friendRepo->delete($outgoingRequest) ? "deleted" : false;
+            }
+        }
+    }
 }
 
 $friendships = $friendRepo->getAllForUser($LoggedInUser->User_Id);
@@ -65,6 +77,15 @@ $requests = (function ($friendships, $userId) {
     $array = array();
     foreach ($friendships as $friendship) {
         if ($friendship->Status_Code == 'request' && $friendship->Friend_RequesteeId == $userId)
+            array_push($array, $friendship);
+    }
+    return $array;
+})($friendships, $LoggedInUser->User_Id);
+
+$outgoingRequests = (function ($friendships, $userId) {
+    $array = array();
+    foreach ($friendships as $friendship) {
+        if ($friendship->Status_Code == 'request' && $friendship->Friend_RequesterId == $userId)
             array_push($array, $friendship);
     }
     return $array;
@@ -131,6 +152,7 @@ $dbManager->close();
         <input type="submit" class="btn btn-primary col-xs-offset-10" value="Defriend Selected" <?php echo (count($friends) == 0) ? "disabled" : ""; ?> onclick="return confirm('Are you sure you want to delete the selected friends?')" />
     </form>
     <br />
+    <hr/>
     <?php if (isset($requestResult)): ?>
         <div class="alert-success alert">
             <p><span class="glyphicon-thumbs-up glyphicon"></span> Friend request successfully <?php echo $requestResult; ?>!</p>
@@ -166,6 +188,44 @@ $dbManager->close();
         </table>
         <input type="submit" class="btn btn-primary col-xs-offset-9" name="accept" value="Accept Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> />
         <input type="submit" class="btn btn-danger" name="reject" value="Reject Selected" <?php echo (count($requests) == 0) ? "disabled" : ""; ?> onclick="return confirm('Are you sure you want reject the selected friend requests?')" />
+    </form>
+    <br />
+    <hr/>
+    <?php if (isset($outgoingRequestResult)): ?>
+    <div class="alert-success alert">
+        <p>
+            <span class="glyphicon-thumbs-up glyphicon"></span>Outgoing Friend request successfully <?php echo $outgoingRequestResult; ?>!
+        </p>
+    </div>
+    <?php endif; ?>
+    <p>Outgoing Friend Requests:</p>
+    <form action="MyFriends.php" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $dbManager->connect(); foreach($outgoingRequests as $request): ?>
+                <tr>
+                    <td>
+                        <?php $userRepo = new DBUserRepository($dbManager); echo $userRepo->getID($request->Friend_RequesteeId)->Name; ?>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="outgoingRequest[]" value="<?php echo $request->Friend_RequesteeId; ?>" />
+                    </td>
+                </tr>
+                <?php endforeach; $dbManager->close(); ?>
+                <?php if (count($outgoingRequests) == 0): ?>
+                <tr>
+                    <td colspan="3" align="center">You have not sent out any friend requests</td>
+                </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-danger" name="deleteOutgoing" value="Delete Selected" <?php echo (count($outgoingRequests) == 0) ? "disabled" : ""; ?> onclick="return confirm('Are you sure you want to delete the selected friend requests?')" />
     </form>
 </div>
 
