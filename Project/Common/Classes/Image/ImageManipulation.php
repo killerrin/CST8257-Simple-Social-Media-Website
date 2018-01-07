@@ -148,7 +148,10 @@ class ImageManipulation
                 }
 
                 // Add the picture to the Database
-                $this->PictureRepo->insert($picture);
+                $tmpPicture = $this->PictureRepo->getID($picture->Picture_Id);
+                if (empty($tmpPicture[0])) {
+                    $this->PictureRepo->insert($picture);
+                }
             }
         }
     }
