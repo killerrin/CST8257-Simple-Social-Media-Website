@@ -70,6 +70,13 @@ class ImageManipulation
         if (!is_dir($thumbPath)) { mkdir($thumbPath, 0755, true); }
     }
 
+    public function DeleteRootFolder() { unlink($this->GetRootFolder()); }
+    public function DeleteRootUserFolder() { unlink($this->GetRootUserFolder()); }
+    public function DeleteRootAlbumFolder() { unlink($this->GetRootAlbumFolder()); }
+    public function DeleteOriginalFolder() { unlink($this->GetOriginalFolder()); }
+    public function DeleteGalleryFolder() { unlink($this->GetGalleryFolder()); }
+    public function DeleteThumbnailFolder() { unlink($this->GetThumbnailFolder()); }
+
     public function CountPictures() : int
     {
         $files = scandir($this->GetOriginalFolder());
@@ -170,8 +177,7 @@ class ImageManipulation
         unlink($albumThumbnailFilePath);
 
         // Remove from DB
-        $tmpPicture = $this->PictureRepo->getID($picture->Picture_Id);
-        $this->PictureRepo->delete($tmpPicture[0]);
+        $this->PictureRepo->delete($picture);
     }
 
     public function DownloadPicture($fileName) {

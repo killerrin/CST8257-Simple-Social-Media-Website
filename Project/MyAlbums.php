@@ -9,6 +9,7 @@ $dbManager = new DBManager();
 $dbManager->connect();
 $albumRepo = new DBAlbumRepository($dbManager);
 $accessibilityRepo = new DBAccessibilityRepository($dbManager);
+$pictureRepo = new DBPictureRepository($dbManager);
 
 $accessibilityMode = $accessibilityRepo->getAll();
 
@@ -23,7 +24,26 @@ if (!empty($_POST)) {
 
 // Handle delete request
 if (isset($_GET['delete'])) {
-    $result = $albumRepo->delete($albumRepo->getID($_GET['delete']));
+    $albumToDelete = $albumRepo->getID($_GET['delete']);
+    if ($albumToDelete->Owner_Id == $LoggedInUser->User_Id) {
+        $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $albumToDelete->Album_Id, $dbManager, false);
+
+        // Delete all the Images in the Album
+        $albumPhotos = $albumToDelete->GetPictures($pictureRepo);
+        foreach ($albumPhotos as $photo)
+        {
+            $imageManipulation->DeletePictures($photo);
+        }
+
+        // Delete the Album
+        $result = $albumRepo->delete($albumToDelete);
+
+        // Delete the Album Folder
+        $imageManipulation->DeleteRootAlbumFolder();   
+    }
+    else {
+        $result = false;
+    }
 }
 
 // self executing function fetches albums and filters without polluting the global namespace 8^)
