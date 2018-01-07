@@ -28,4 +28,14 @@ class Picture
     public function GetAlbum(DBAlbumRepository $repo) {
         return $repo->getID($this->Album_Id);
     }
+
+    public function GetAllComments(DBCommentRepository $repo) {
+        $comments = $repo->getAll();
+        $array = array();
+        foreach ($comments as $comment) {
+            if ($comment->Picture_Id == $this->Picture_Id)
+                array_push($array, $comment);
+        }
+        return $array;
+    }
 }
