@@ -107,6 +107,7 @@ class ImageManipulation
 
     public function SavePictures($tmpFilePath, Picture $picture)
     {
+        //echo $tmpFilePath; // For Testing
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
         $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
