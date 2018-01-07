@@ -70,12 +70,12 @@ class ImageManipulation
         if (!is_dir($thumbPath)) { mkdir($thumbPath, 0755, true); }
     }
 
-    public function DeleteRootFolder() { unlink($this->GetRootFolder()); }
-    public function DeleteRootUserFolder() { unlink($this->GetRootUserFolder()); }
-    public function DeleteRootAlbumFolder() { unlink($this->GetRootAlbumFolder()); }
-    public function DeleteOriginalFolder() { unlink($this->GetOriginalFolder()); }
-    public function DeleteGalleryFolder() { unlink($this->GetGalleryFolder()); }
-    public function DeleteThumbnailFolder() { unlink($this->GetThumbnailFolder()); }
+    public function DeleteRootFolder() { rmdir($this->GetRootFolder()); }
+    public function DeleteRootUserFolder() { rmdir($this->GetRootUserFolder()); }
+    public function DeleteRootAlbumFolder() { rmdir($this->GetRootAlbumFolder()); }
+    public function DeleteOriginalFolder() { rmdir($this->GetOriginalFolder()); }
+    public function DeleteGalleryFolder() { rmdir($this->GetGalleryFolder()); }
+    public function DeleteThumbnailFolder() { rmdir($this->GetThumbnailFolder()); }
 
     public function CountPictures() : int
     {
