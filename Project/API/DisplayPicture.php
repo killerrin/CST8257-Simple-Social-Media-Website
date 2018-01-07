@@ -13,9 +13,9 @@
     $dbManager = new DBManager();
     $imageManipulation = new ImageManipulation($userID, $albumID, $dbManager, false);
 
-    $fileName = $imageManipulation->GetFileNameFromPath($filePath);
-    $imageType = $imageManipulation->GetImageType($filePath);
-    $newImage = $imageManipulation->CopyImage($filePath);
+    $fileName = ImageManipulation::GetFileNameFromPath($filePath);
+    $imageType = ImageManipulation::GetImageType($filePath);
+    $newImage = ImageManipulation::CopyImage($filePath);
 
     //echo "<p>$fileName</p>";
     //echo "<p>$imageType</p>";

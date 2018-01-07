@@ -76,63 +76,10 @@ class ImageManipulation
         return count($files);
     }
 
-    public function GetFileNameFromPath($filePath) : string
-    {
-        $ind = strrpos($filePath, "/");
-        $fileName = substr($filePath, $ind);
-        return $fileName;
-    }
-
-    public function GetImageType($filePath) : int
-    {
-        return exif_imagetype($filePath);
-    }
-
-    public function GetImageData($filePath)
-    {
-        $image = NULL;
-        $imageInfo = getimagesize($filePath);
-        if ($imageInfo) {
-            // Load the Image
-            switch ($imageInfo[2]) {
-                case IMAGETYPE_PNG:
-                    //echo "Its a PNG";
-                    $image = imagecreatefrompng($filePath);
-                    break;
-                case IMAGETYPE_JPEG:
-                    //echo "Its a JPEG";
-                    $image = imagecreatefromjpeg($filePath);
-                    break;
-                case IMAGETYPE_GIF:
-                    //echo "Its a GIF";
-                    $image = imagecreatefromgif($filePath);
-                    break;
-                default:
-                    break;
-            }
-        }
-        return $image;
-    }
-
-    public function CopyImage($filePath)
-    {
-        $imageInfo = getimagesize($filePath);
-        if ($imageInfo) {
-            $originalImage = $this->GetImageData($filePath);
-            $originalWidth = imagesx($originalImage);
-            $originalHeight = imagesY($originalImage);
-
-            $newImage = imagecreatetruecolor($originalWidth, $originalHeight);
-            imagecopyresampled($newImage, $originalImage, 0, 0, 0, 0, $originalWidth, $originalHeight, $originalWidth, $originalHeight);
-            return $newImage;
-        }
-        return NULL;
-    }
-
     public function CopyImageAndSave($originalFilePath, $savePath) : bool
     {
         // Copy the Image
-        $newImage = $this->CopyImage($originalFilePath);
+        $newImage = ImageManipulation::CopyImage($originalFilePath);
         if ($newImage == NULL) return false;
 
         // Save the Image
@@ -158,21 +105,6 @@ class ImageManipulation
         return false;
     }
 
-    public function RotateImage($imageResource, float $rotationAngle) {
-        return imagerotate($imageResource, $rotationAngle, 0);
-    }
-    public function ScaleImage($imageResource, int $newWidth, int $newHeight = -1, int $mode = IMG_BILINEAR_FIXED) {
-        return imagescale($imageResource, $newWidth, $newHeight, $mode);
-    }
-    public function ResizeImage($imageResource, int $newWidth, int $newHeight) {
-        $originalWidth = imagesx($imageResource);
-        $originalHeight = imagesY($imageResource);
-
-        $newImage = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($newImage, $imageResource, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
-        return $newImage;
-    }
-
     public function SavePictures($tmpFilePath, Picture $picture)
     {
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
@@ -185,7 +117,7 @@ class ImageManipulation
             $imageInfo = getimagesize($originalFilePath);
             if ($imageInfo) {
                 // Load the Image
-                $originalImage = $this->GetImageData($originalFilePath);
+                $originalImage = ImageManipulation::GetImageData($originalFilePath);
                 $originalWidth = imagesx($originalImage);
                 $originalHeight = imagesY($originalImage);
 
@@ -265,7 +197,81 @@ class ImageManipulation
 
         ob_clean();
         flush();
-        readfile($filePath);
+        readfile($originalFilePath);
         flush();
     }
+
+
+    /* ====================================================================================
+     * ====================================================================================
+     * ==================================================================================== */
+    public static function GetFileNameFromPath($filePath) : string
+    {
+        $ind = strrpos($filePath, "/");
+        $fileName = substr($filePath, $ind);
+        return $fileName;
+    }
+
+    public static function GetImageType($filePath) : int
+    {
+        return exif_imagetype($filePath);
+    }
+
+    public static function GetImageData($filePath)
+    {
+        $image = NULL;
+        $imageInfo = getimagesize($filePath);
+        if ($imageInfo) {
+            // Load the Image
+            switch ($imageInfo[2]) {
+                case IMAGETYPE_PNG:
+                    //echo "Its a PNG";
+                    $image = imagecreatefrompng($filePath);
+                    break;
+                case IMAGETYPE_JPEG:
+                    //echo "Its a JPEG";
+                    $image = imagecreatefromjpeg($filePath);
+                    break;
+                case IMAGETYPE_GIF:
+                    //echo "Its a GIF";
+                    $image = imagecreatefromgif($filePath);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $image;
+    }
+
+    public static function CopyImage($filePath)
+    {
+        $imageInfo = getimagesize($filePath);
+        if ($imageInfo) {
+            $originalImage = ImageManipulation::GetImageData($filePath);
+            $originalWidth = imagesx($originalImage);
+            $originalHeight = imagesY($originalImage);
+
+            $newImage = imagecreatetruecolor($originalWidth, $originalHeight);
+            imagecopyresampled($newImage, $originalImage, 0, 0, 0, 0, $originalWidth, $originalHeight, $originalWidth, $originalHeight);
+            return $newImage;
+        }
+        return NULL;
+    }
+
+    public static function RotateImage($imageResource, float $rotationAngle) {
+        return imagerotate($imageResource, $rotationAngle, 0);
+    }
+    public static function ScaleImage($imageResource, int $newWidth, int $newHeight = -1, int $mode = IMG_BILINEAR_FIXED) {
+        return imagescale($imageResource, $newWidth, $newHeight, $mode);
+    }
+    public static function ResizeImage($imageResource, int $newWidth, int $newHeight) {
+        $originalWidth = imagesx($imageResource);
+        $originalHeight = imagesY($imageResource);
+
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($newImage, $imageResource, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+        return $newImage;
+    }
+
+
 }
