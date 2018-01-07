@@ -17,12 +17,11 @@ if (!empty($_POST)) {
         $emptyFieldError = true;
     if (!$emptyFieldError) {
         $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $_POST['album'], $dbManager, true);
-
         foreach ((array) $_FILES['file']['name'] as $index => $value) {
             $imageManipulation->SavePictures(((array) $_FILES['file']['tmp_name'])[$index], new Picture(null, $_POST['album'], $value, $_POST['title'], $_POST['description'], date('Y-m-d H:i:s')));
 
         }
-        $uploadSUccess = true;
+        $uploadSuccess = true;
     }
 }
 
@@ -49,7 +48,7 @@ $dbManager->close();
         <p><span class="glyphicon glyphicon-thumbs-down"></span> All fields are required!</p>
     </div>
     <?php endif; ?>
-    <?php if ($uploadSUccess): ?>
+    <?php if ($uploadSuccess): ?>
     <div class="alert alert-success">
         <p><span class="glyphicon glyphicon-thumbs-up"></span> Pictures uploaded successfully!</p>
     </div>
@@ -71,7 +70,7 @@ $dbManager->close();
         <div class="form-group">
             <label class="col-xs-3 control-label" for="file">File to Upload:</label>
             <div class="col-xs-9">
-                <input type="file" id="file" name="file" multiple accept="image/png, image/jpeg, image/gif" />
+                <input type="file" id="file" name="file[]" multiple accept="image/png, image/jpeg, image/gif" />
             </div>
         </div>
         <div class="form-group">
