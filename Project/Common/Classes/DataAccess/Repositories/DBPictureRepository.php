@@ -13,7 +13,7 @@ class DBPictureRepository extends DBGenericRepository
         parent::__construct($dbManager, "Pictures");
     }
 
-    private function ParseQuery($result) {
+    private function ParseQuery($result) : array {
         $arrayResult = array();
         while ($row = mysqli_fetch_row($result))
         {
@@ -22,18 +22,18 @@ class DBPictureRepository extends DBGenericRepository
         return $arrayResult;
     }
 
-    private function rowToObject($row) {
+    private function rowToObject($row) : Picture {
         return new Picture($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
     }
 
-    public function getAll()
+    public function getAll() : array
     {
         $result = $this->dbManager->queryAll($this->tableName);
         return $this->parseQuery($result);
     }
 
     //  Get Picture by Picture_Id
-    function getID($key) {
+    public function getID($key) : Picture {
         $result = $this->dbManager->queryByFilter($this->tableName, "Picture_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }
@@ -49,14 +49,14 @@ class DBPictureRepository extends DBGenericRepository
     }
 
     //  Return true if success, else false
-    function insert(Picture $item) {
+    public function insert(Picture $item) {
         $query = "INSERT INTO $this->tableName
                   VALUES(null, '".$this->dbManager->escapeString($item->Album_Id)."', '".$this->dbManager->escapeString($item->FileName)."', '".$this->dbManager->escapeString($item->Title)."', '".$this->dbManager->escapeString($item->Description)."', '".$this->dbManager->escapeString($item->Date_Added)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
-    function update(Picture $item) {
+    public function update(Picture $item) {
         $query = "UPDATE $this->tableName
                   SET Album_Id = '".$this->dbManager->escapeString($item->Album_Id)."',
                   FileName = '".$this->dbManager->escapeString($item->FileName)."',
@@ -68,7 +68,7 @@ class DBPictureRepository extends DBGenericRepository
     }
 
     // Return True of Success, False if failed
-    function delete(Picture $item) {
+    public function delete(Picture $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE Picture_Id = '".$this->dbManager->escapeString($item->Picture_Id)."'";
         return $this->dbManager->queryCustom($query);

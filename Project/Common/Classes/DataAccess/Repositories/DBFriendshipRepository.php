@@ -14,7 +14,7 @@ class DBFriendshipRepository extends DBGenericRepository
         parent::__construct($dbManager, "Friendships");
     }
 
-    private function ParseQuery($result) {
+    private function ParseQuery($result) : array {
         $arrayResult = array();
         while ($row = mysqli_fetch_row($result))
         {
@@ -23,17 +23,17 @@ class DBFriendshipRepository extends DBGenericRepository
         return $arrayResult;
     }
 
-    private function rowToObject($row) {
+    private function rowToObject($row) : Friendship {
         return new Friendship($row[0], $row[1], $row[2]);
     }
 
-    public function getAll()
+    public function getAll() : array
     {
         $result = $this->dbManager->queryAll($this->tableName);
         return $this->parseQuery($result);
     }
 
-    public function getAllForUser($userId)
+    public function getAllForUser($userId) : array
     {
         $query = "SELECT * FROM $this->tableName
                   WHERE
@@ -43,7 +43,7 @@ class DBFriendshipRepository extends DBGenericRepository
         return $this->parseQuery($result);
     }
 
-    function getID($requesterID, $requesteeID, $statusCode) {
+    public function getID($requesterID, $requesteeID, $statusCode) : Friendship {
         $query = "SELECT * FROM $this->tableName
                   WHERE
                     Friend_RequesterId = '".$this->dbManager->escapeString($requesterID)."' AND
@@ -54,14 +54,14 @@ class DBFriendshipRepository extends DBGenericRepository
     }
 
     //  Return true if success, else false
-    function insert(Friendship $item) {
+    public function insert(Friendship $item) {
         $query = "INSERT INTO $this->tableName
                   VALUES('".$this->dbManager->escapeString($item->Friend_RequesterId)."', '".$this->dbManager->escapeString($item->Friend_RequesteeId)."', '".$this->dbManager->escapeString($item->Status_Code)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
-    function update(Friendship $item) {
+    public function update(Friendship $item) {
         $query = "UPDATE $this->tableName
                   SET Status_Code = '".$this->dbManager->escapeString($item->Status_Code)."'
                   WHERE Friend_RequesterId = '".$this->dbManager->escapeString($item->Friend_RequesterId)."' AND Friend_RequesteeId = '".$this->dbManager->escapeString($item->Friend_RequesteeId)."'";
@@ -69,7 +69,7 @@ class DBFriendshipRepository extends DBGenericRepository
     }
 
     // Return True of Success, False if failed
-    function delete(Friendship $item) {
+    public function delete(Friendship $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE
                     Friend_RequesterId = '".$this->dbManager->escapeString($item->Friend_RequesterId)."' AND

@@ -13,7 +13,7 @@ class DBCommentRepository extends DBGenericRepository
         parent::__construct($dbManager, "Comments");
     }
 
-    private function ParseQuery($result) {
+    private function ParseQuery($result) : array {
         $arrayResult = array();
         while ($row = mysqli_fetch_row($result))
         {
@@ -22,31 +22,31 @@ class DBCommentRepository extends DBGenericRepository
         return $arrayResult;
     }
 
-    private function rowToObject($row) {
+    private function rowToObject($row) : Comment {
         return new Comment($row[0], $row[1], $row[2], $row[3], $row[4]);
     }
 
-    public function getAll()
+    public function getAll() : array
     {
         $result = $this->dbManager->queryAll($this->tableName);
         return $this->parseQuery($result);
     }
 
     //  Get Accessibility by Accessibility_Code
-    function getID($key) {
+    public function getID($key) : Comment {
         $result = $this->dbManager->queryByFilter($this->tableName, "Comment_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }
 
     //  Return true if success, else false
-    function insert(Comment $item) {
+    public function insert(Comment $item) {
         $query = "INSERT INTO $this->tableName
                   VALUES(null, '".$this->dbManager->escapeString($item->Author_Id)."', '".$this->dbManager->escapeString($item->Picture_Id)."', '".$this->dbManager->escapeString($item->Comment_Text)."', '".$this->dbManager->escapeString($item->Date)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
-    function update(Comment $item) {
+    public function update(Comment $item) {
         $query = "UPDATE $this->tableName
                   SET Comment_Id = '".$this->dbManager->escapeString($item->Comment_Id)."',
                   Author_Id = '".$this->dbManager->escapeString($item->Author_Id)."',
@@ -58,7 +58,7 @@ class DBCommentRepository extends DBGenericRepository
     }
 
     // Return True of Success, False if failed
-    function delete(Comment $item) {
+    public function delete(Comment $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE Comment_Id = '".$this->dbManager->escapeString($item->Comment_Id)."'";
         return $this->dbManager->queryCustom($query);

@@ -5,7 +5,7 @@ class DBUserRepository extends DBGenericRepository
         parent::__construct($dbManager, "Users");
     }
 
-    private function parseQuery($result) {
+    private function parseQuery($result) : array {
         $arrayResult = array();
         while ($row = mysqli_fetch_row($result))
         {
@@ -13,29 +13,29 @@ class DBUserRepository extends DBGenericRepository
         }
         return $arrayResult;
     }
-    private function rowToObject($row) {
+    private function rowToObject($row) : User {
         return new User($row[0], $row[1], $row[2], $row[3]);
     }
 
-    function getAll() {
+    public function getAll() : array {
         $result = $this->dbManager->queryAll($this->tableName);
         return $this->parseQuery($result);
     }
 
-    function getID($key) {
+    public function getID($key) : User {
         $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }
 
     // Return True of Success, False if failed
-    function insert(User $item) {
+    public function insert(User $item) {
         $query = "INSERT INTO $this->tableName
                   VALUES('".$this->dbManager->escapeString($item->User_Id)."', '".$this->dbManager->escapeString($item->Name)."', '".$this->dbManager->escapeString($item->Phone)."', '".$this->dbManager->escapeString($item->Password)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
-    function update(User $item) {
+    public function update(User $item) {
         $query = "UPDATE $this->tableName
                   SET Name = '".$this->dbManager->escapeString($item->Name)."', Phone = '".$this->dbManager->escapeString($item->Phone)."', Password = '".$this->dbManager->escapeString($item->Password)."'
                   WHERE User_Id = '".$this->dbManager->escapeString($item->User_Id)."'";
@@ -43,7 +43,7 @@ class DBUserRepository extends DBGenericRepository
     }
 
     // Return True of Success, False if failed
-    function delete(User $item) {
+    public function delete(User $item) {
         $query = "DELETE FROM $this->tableName
                   WHERE User_Id = '".$this->dbManager->escapeString($item->User_Id)."'";
         return $this->dbManager->queryCustom($query);
