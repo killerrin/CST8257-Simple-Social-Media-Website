@@ -20,6 +20,9 @@
   <ItemGroup>
     <Compile Include="AddAlbum.php" />
     <Compile Include="AddFriend.php" />
+    <Compile Include="API\GetPictureCommentsJson.php" />
+    <Compile Include="API\GetAlbumPicturesJson.php" />
+    <Compile Include="API\GetAlbumsJson.php" />
     <Compile Include="Common\Classes\DataAccess\DBGenericRepository.php" />
     <Compile Include="Common\Classes\DataAccess\DBManager.php" />
     <Compile Include="Common\Classes\DataAccess\Repositories\DBCommentRepository.php" />
