@@ -148,17 +148,20 @@ class ImageManipulation
                 }
 
                 // Add the picture to the Database
-                $this->PictureRepo->insert($picture);
+                $tmpPicture = $this->PictureRepo->getID($picture->Picture_Id);
+                if (count($tmpPicture) == 0) {
+                    $this->PictureRepo->insert($picture);
+                }
             }
         }
     }
 
-    public function DeletePictures($fileName)
+    public function DeletePictures(Picture $picture)
     {
         // Get the files
-        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $fileName);
-        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $fileName);
-        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $fileName);
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
+        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
+        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
 
         // Delete the files
         unlink($originalFilePath);
@@ -166,7 +169,7 @@ class ImageManipulation
         unlink($albumThumbnailFilePath);
 
         // Remove from DB
-        $tmpPicture = $this->PictureRepo->getAlbumFilename($this->Album_Id, $fileName);
+        $tmpPicture = $this->PictureRepo->getID($picture->Picture_Id);
         $this->PictureRepo->delete($tmpPicture[0]);
     }
 
