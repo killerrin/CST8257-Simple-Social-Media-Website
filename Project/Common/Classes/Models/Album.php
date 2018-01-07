@@ -15,7 +15,7 @@ class Album
     public $Date_Updated;
     public $Owner_Id;
 
-    public function __construct($id, $title, $description, $dateUpdated, $ownerId, $accessibilityCode)
+    public function __construct(int $id, string $title, string $description, $dateUpdated, string $ownerId, string $accessibilityCode)
     {
         $this->Album_Id = $id;
         $this->Title = $title;

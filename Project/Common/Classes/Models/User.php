@@ -15,18 +15,18 @@ class User
     public $Phone;
     public $Password;
 
-    public function __construct($userID, $name, $phone, $password) {
+    public function __construct(string $userID, string $name, string $phone, string $password) {
         $this->User_Id = $userID;
         $this->Name = $name;
         $this->Phone = $phone;
         $this->Password = $password;
     }
 
-    public static function HashPassword($password) {
+    public static function HashPassword(string $password) : string {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-    public static function VerifyPassword($password, $hash) {
+    public static function VerifyPassword(string $password, string $hash) : bool {
         return password_verify($password, $hash);
     }
 

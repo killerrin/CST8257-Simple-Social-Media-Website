@@ -15,7 +15,7 @@ class Picture
     public $Description;
     public $Date_Added;
 
-    public function __construct($pictureId, $albumId, $fileName, $title, $description, $dateAdded)
+    public function __construct(int $pictureId, int $albumId, string $fileName, string $title, string $description, $dateAdded)
     {
         $this->Picture_Id = $pictureId;
         $this->Album_Id = $albumId;
