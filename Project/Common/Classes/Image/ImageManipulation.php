@@ -190,11 +190,11 @@ class ImageManipulation
                 $originalHeight = imagesY($originalImage);
 
                 // Create the Thumbnail and put in folder
-                $thumbnailImage = imagecreatetruecolor(THUMB_MAX_WIDTH, THUMB_MAX_HEIGHT);
+                $thumbnailImage = imagecreatetruecolor(ImageManipulation::THUMBNAIL_WIDTH, ImageManipulation::THUMBNAIL_HEIGHT);
                 imagecopyresampled($thumbnailImage, $originalImage, 0, 0, 0, 0, ImageManipulation::THUMBNAIL_WIDTH, ImageManipulation::THUMBNAIL_HEIGHT, $originalWidth, $originalHeight);
 
                 // Create the Album and put in folder
-                $albumImage = imagecreatetruecolor(IMAGE_MAX_WIDTH, IMAGE_MAX_HEIGHT);
+                $albumImage = imagecreatetruecolor(ImageManipulation::GALLERY_WIDTH, ImageManipulation::GALLERY_HEIGHT);
                 imagecopyresampled($albumImage, $originalImage, 0, 0, 0, 0, ImageManipulation::GALLERY_WIDTH, ImageManipulation::GALLERY_HEIGHT, $originalWidth, $originalHeight);
 
                 // Save the Image
