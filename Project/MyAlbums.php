@@ -1,5 +1,5 @@
 <?php //session_start(); ?>
-<?php include "Common/Header.php"; ?>
+<?php $pageTitle = "My Albums"; include "Common/Header.php"; ?>
 
 <?php
 // If user is logged in, assign Student object to $LoggedInUser, otherwise redirect to login and die (self-executing function)

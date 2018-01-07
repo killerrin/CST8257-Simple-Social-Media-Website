@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Algonquin Social Media Website</title>
+    <title>Algonquin Social Media Website - <?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="Contents/css/bootstrap.min.css" />
     <link rel="stylesheet" href="Contents/AlgCss/Site.css" />
     <link href="Contents/css/style.css" rel="stylesheet" />

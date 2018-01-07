@@ -1,5 +1,5 @@
 <?php //session_start(); ?>
-<?php include "Common/Header.php"; ?>
+<?php $pageTitle = "Login"; include "Common/Header.php"; ?>
 
 <?php
 $loginError = false;

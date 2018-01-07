@@ -1,5 +1,5 @@
 <?php //session_start(); ?>
-<?php include "Common/Header.php"; ?>
+<?php $pageTitle = "New User"; include "Common/Header.php"; ?>
 
 <?php
 if ($_POST) {

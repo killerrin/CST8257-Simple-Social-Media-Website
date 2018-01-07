@@ -1,5 +1,5 @@
 <?php //session_start(); ?>
-<?php include "Common/Header.php"; ?>
+<?php $pageTitle = "Home"; include "Common/Header.php"; ?>
 
 <?php
 $LoggedInUser = $_SESSION["LoggedInUser"];

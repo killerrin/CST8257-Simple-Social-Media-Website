@@ -1,5 +1,4 @@
-
-<?php include "Common/Header.php"; ?>
+<?php $pageTitle = "Add Friend"; include "Common/Header.php"; ?>
 <?php session_start(); ?>
 <?php
 $LoggedInUser = isset($_SESSION["LoggedInUser"])?$_SESSION["LoggedInUser"]:(function(){header("Location: Login.php?returnUrl=".urlencode($_SERVER['REQUEST_URI']));die();})();
