@@ -34,7 +34,7 @@ class DBAccessibilityRepository extends DBGenericRepository
     }
 
     //  Get Accessibility by Accessibility_Code
-    public function getID($key) : Accessibility {
+    public function getID($key) : ?Accessibility {
         $result = $this->dbManager->queryByFilter($this->tableName, "Accessibility_Code", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }

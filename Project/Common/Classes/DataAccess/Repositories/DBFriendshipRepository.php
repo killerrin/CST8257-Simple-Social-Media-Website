@@ -43,7 +43,7 @@ class DBFriendshipRepository extends DBGenericRepository
         return $this->parseQuery($result);
     }
 
-    public function getID($requesterID, $requesteeID, $statusCode) : Friendship {
+    public function getID($requesterID, $requesteeID, $statusCode) : ?Friendship {
         $query = "SELECT * FROM $this->tableName
                   WHERE
                     Friend_RequesterId = '".$this->dbManager->escapeString($requesterID)."' AND

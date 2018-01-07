@@ -33,7 +33,7 @@ class DBPictureRepository extends DBGenericRepository
     }
 
     //  Get Picture by Picture_Id
-    public function getID($key) : Picture {
+    public function getID($key) : ?Picture {
         $result = $this->dbManager->queryByFilter($this->tableName, "Picture_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }

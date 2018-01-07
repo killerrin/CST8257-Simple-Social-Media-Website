@@ -51,7 +51,7 @@ class DBCommentRepository extends DBGenericRepository
     }
 
     //  Get Accessibility by Accessibility_Code
-    public function getID($key) : Comment {
+    public function getID($key) : ?Comment {
         $result = $this->dbManager->queryByFilter($this->tableName, "Comment_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }

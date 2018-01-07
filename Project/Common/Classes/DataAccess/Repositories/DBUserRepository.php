@@ -22,7 +22,7 @@ class DBUserRepository extends DBGenericRepository
         return $this->parseQuery($result);
     }
 
-    public function getID($key) : User {
+    public function getID($key) : ?User {
         $result = $this->dbManager->queryByFilter($this->tableName, "User_Id", $this->dbManager->escapeString($key));
         return $this->parseQuery($result)[0];
     }
