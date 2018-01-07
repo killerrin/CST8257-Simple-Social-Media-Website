@@ -3,6 +3,8 @@
 
     $action = $_GET["action"];          //echo "<p>$action</p>";
     $filePath = $_GET["filePath"];      //echo "<p>$filePath</p>";
+    $userID = $_GET["userID"];          //echo "<p>$userID</p>";
+    $albumID = $_GET["albumID"];        //echo "<p>$albumID</p>";
 
     if(!isset($fileName)) { return; }
 
@@ -18,9 +20,10 @@
 
     switch ($action)
     {
+        case "rotate":
         case "rotateLeft":
         case "rotateRight":
-            $rotation = $_GET["currentRotation"];
+            $rotation = $_GET["rotation"];
             //echo "<p>$rotation</p>";
 
             $newImage = imagerotate($newImage, $rotation, 0);
