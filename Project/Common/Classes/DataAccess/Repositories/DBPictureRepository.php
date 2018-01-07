@@ -51,19 +51,19 @@ class DBPictureRepository extends DBGenericRepository
     //  Return true if success, else false
     public function insert(Picture $item) {
         $query = "INSERT INTO $this->tableName
-                  VALUES(null, '".$this->dbManager->escapeString($item->Album_Id)."', '".$this->dbManager->escapeString($item->FileName)."', '".$this->dbManager->escapeString($item->Title)."', '".$this->dbManager->escapeString($item->Description)."', '".$this->dbManager->escapeString($item->Date_Added)."')";
+                  VALUES(null, ".$this->dbManager->escapeString($item->Album_Id).", '".$this->dbManager->escapeString($item->FileName)."', '".$this->dbManager->escapeString($item->Title)."', '".$this->dbManager->escapeString($item->Description)."', '".$this->dbManager->escapeString($item->Date_Added)."')";
         return $this->dbManager->queryCustom($query);
     }
 
     // Return True of Success, False if failed
     public function update(Picture $item) {
         $query = "UPDATE $this->tableName
-                  SET Album_Id = '".$this->dbManager->escapeString($item->Album_Id)."',
+                  SET Album_Id = ".$this->dbManager->escapeString($item->Album_Id).",
                   FileName = '".$this->dbManager->escapeString($item->FileName)."',
                   Title = '".$this->dbManager->escapeString($item->Title)."',
                   Description = '".$this->dbManager->escapeString($item->Description)."',
                   Date_Added = '".$this->dbManager->escapeString($item->Date_Added)."'
-                  WHERE Picture_Id = '".$this->dbManager->escapeString($item->Picture_Id)."'";
+                  WHERE Picture_Id = ".$this->dbManager->escapeString($item->Picture_Id)."";
         return $this->dbManager->queryCustom($query);
     }
 
