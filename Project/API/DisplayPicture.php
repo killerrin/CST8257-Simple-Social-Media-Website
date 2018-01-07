@@ -7,6 +7,8 @@
     $albumID = $_GET["albumID"];        //echo "<p>$albumID</p>";
 
     if(!isset($fileName)) { return; }
+    //if(!isset($userID)) { return; }
+    //if(!isset($albumID)) { return; }
 
     $dbManager = new DBManager();
     $imageManipulation = new ImageManipulation($userID, $albumID, $dbManager, false);
