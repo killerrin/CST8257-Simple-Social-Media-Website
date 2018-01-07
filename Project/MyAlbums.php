@@ -39,6 +39,9 @@ if (isset($_GET['delete'])) {
         $result = $albumRepo->delete($albumToDelete);
 
         // Delete the Album Folder
+        $imageManipulation->DeleteOriginalFolder();   
+        $imageManipulation->DeleteGalleryFolder();   
+        $imageManipulation->DeleteThumbnailFolder();   
         $imageManipulation->DeleteRootAlbumFolder();   
     }
     else {
