@@ -9,7 +9,6 @@ $dbManager = new DBManager();
 $userRepo = new DBUserRepository($dbManager);
 $albumManager = new DBAlbumRepository($dbManager);
 $pictureRepo = new DBPictureRepository($dbManager);
-$friendshipRepo = new DBFriendshipRepository($dbManager);
 $commentRepo = new DBCommentRepository($dbManager);
 
 $dbManager->connect();
