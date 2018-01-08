@@ -50,8 +50,11 @@ $dbManager->close();
                     <h5>Description:</h5>
                     <p id="description"></p>
                 </div>
-                <div id="commentsContainer">
+                <div>
+                    <h5>Comments:</h5>
+                    <div id="commentsContainer">
 
+                    </div>
                 </div>
             </div>
         </div>
