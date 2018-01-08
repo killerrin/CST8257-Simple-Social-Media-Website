@@ -14,7 +14,7 @@ function populateCarousel() {
                 var gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
                 $("#carousel").append(`<div class="slide"><img class="thumbnail img-thumbnail" src="${thumbnailSrc}" data-id="${picture.Picture_Id}" data-name="${picture.Title}" data-original-src="${originalSrc}" data-gallery-src="${gallerySrc}" data-thumbnail-src="${thumbnailSrc}" alt="${picture.Title} "/></div>`)
             });
-            if (Array.from(pictures).length == 0) {
+            if (Array.from(pictures).length === 0) {
                 $("#carousel").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no pictures in the album!</p></div>");
                 clearPage();
             }
@@ -47,7 +47,10 @@ function loadImage(e) {
     var ownerID = $("#ownerId").val();
     $.ajax("API/GetPictureCommentsJson.php?loggedInUserID="+encodeURIComponent(userID)+"&albumUserID="+encodeURIComponent(ownerID)+"&pictureID="+encodeURIComponent(target.attr("data-id")))
         .done(function(comments) {
-            console.log(comments);
+            $("#commentsContainer").empty();
+            if (comments.length === 0) {
+                $("#commentsContainer").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no comments!</p></div>");
+            }
             comments.forEach(appendComment);
         });
 
@@ -64,7 +67,6 @@ function clearPage() {
 }
 
 function appendComment(comment) {
-    console.log("Appending Comment")
     $.ajax("API/CommentUtilities.php?userID="+comment.Author_Id)
         .done(function(name) {
             var container = $("#commentsContainer");
@@ -84,7 +86,6 @@ $(document).on("ready", function() {
     populateCarousel();
 });
 $(document).on("change", "#albumSelect", function() {
-    console.log("change");
     populateCarousel();
 });
 
