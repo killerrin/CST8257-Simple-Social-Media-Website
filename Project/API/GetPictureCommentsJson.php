@@ -17,6 +17,7 @@ $userRepo = new DBUserRepository($dbManager);
 $pictureRepo = new DBPictureRepository($dbManager);
 $commentRepo = new DBCommentRepository($dbManager);
 $friendshipRepo = new DBFriendshipRepository($dbManager);
+$albumRepo = new DBAlbumRepository($dbManager);
 
 $dbManager->connect();
 $loggedInUser = $userRepo->getID($loggedInUserID);
