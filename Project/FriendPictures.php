@@ -7,7 +7,7 @@ $LoggedInUser = isset($_SESSION["LoggedInUser"]) ? $_SESSION["LoggedInUser"] : (
 
 $dbManager = new DBManager();
 $userRepo = new DBUserRepository($dbManager);
-$albumManager = new DBAlbumRepository($dbManager);
+$albumRepo = new DBAlbumRepository($dbManager);
 $pictureRepo = new DBPictureRepository($dbManager);
 $friendshipRepo = new DBFriendshipRepository($dbManager);
 $commentRepo = new DBCommentRepository($dbManager);
@@ -18,10 +18,44 @@ $friendAlbums = $albumRepo->getAllForUserAccessibility($friend->User_Id, "shared
 $areFriends = Friendship::AreUsersFriends($friendshipRepo, $LoggedInUser, $friend);
 $dbManager->close();
 ?>
-
 <div class="container">
     <?php if($areFriends) :?>
+        <h1><?php echo $friend->Name; ?>'s Pictures</h1>
+        <?php if (count($friendAlbums) == 0): ?>
+        <div class="alert alert-danger">
+            <p><span class="glyphicon glyphicon-thumbs-down"></span> This user does not have any shared albums!</p>
+        </div>
+        <?php else: ?>
+        <div class="form-group">
+            <input type="hidden" id="userId" value="<?php echo $LoggedInUser->User_Id; ?>" />
+            <input type="hidden" id="ownerId" value="<?php echo $friend->User_Id; ?>" />
+            <select id="albumSelect" class="form-control">
+            <?php foreach($friendAlbums as $album): ?>
+                <option value=<?php echo '"'.$album->Album_Id.'">'.$album->Title." — updated on ".$album->Date_Updated; ?></option>
+            <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <h2 id="imageTitle"></h2>
+            <div class="col-xs-9" id="images">
+                <div>
+                    <img id="displayImage" src="#" />
+                </div>
+                <div id="carousel">
 
+                </div>
+            </div>
+            <div class="col-xs-3" id="text">
+                <div id="descriptionContainer">
+                    <h5>Description:</h5>
+                    <p id="description"></p>
+                </div>
+                <div id="commentsContainer">
+
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
     <?php else : ?>
     <h1>Access Denied</h1>
     <p>You do not have access to this album.</p>
@@ -31,6 +65,5 @@ $dbManager->close();
     <?php endif;?>
 </div>
 
-
-
+<script src="Scripts/gallery.js"></script>
 <?php include "Common/Footer.php"; ?>
