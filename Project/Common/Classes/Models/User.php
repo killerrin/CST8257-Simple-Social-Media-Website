@@ -16,9 +16,9 @@ class User
     public $Password;
 
     public function __construct(?string $userID, string $name, string $phone, string $password) {
-        $this->User_Id = $userID;
-        $this->Name = $name;
-        $this->Phone = $phone;
+        $this->User_Id = htmlspecialchars($userID);
+        $this->Name = htmlspecialchars($name);
+        $this->Phone = htmlspecialchars($phone);
         $this->Password = $password;
     }
 
