@@ -1,4 +1,5 @@
 function populateCarousel() {
+    $("#carousel").empty();
     var userID = $("#userId").val();
     var ownerID = $("#ownerId").val();
     var albumID = $("#albumSelect").val();
@@ -10,6 +11,7 @@ function populateCarousel() {
                 var gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
                 $("#carousel").append(`<div class="slide"><img class="godDamnedPicture" src="${thumbnailSrc}" data-id="${picture.Picture_Id}" data-name="${picture.Title}" data-original-src="${originalSrc}" data-gallery-src="${gallerySrc}" data-thumbnail-src="${thumbnailSrc}" alt="${picture.Title} "/></div>`)
             });
+            $(".godDamnedPicture").first().click();
         });
 }
 
@@ -30,18 +32,17 @@ function loadImage(e) {
     $("#description").text();
 }
 
-//load big image, description, and comments
+//load big image, description, and comments on click
 
 $(document).on("click", ".godDamnedPicture", loadImage);
 
-//TODO: Somehow trigger loadImage on page load....... I don't like jQuery.........
-$(document).find(".godDamnedPicture").click();
 
 //populate carousel and default image, then repopulate on change
 $(document).on("ready", function() {
     populateCarousel();
 });
 $(document).on("change", "#albumSelect", function() {
+    console.log("change");
     populateCarousel();
 });
 
