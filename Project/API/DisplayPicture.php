@@ -27,8 +27,18 @@
         case "rotateRight":
             $rotation = $_GET["rotation"];
             //echo "<p>$rotation</p>";
-
-            $newImage = imagerotate($newImage, $rotation, 0);
+            $newImage = ImageManipulation::RotateImage($newImage, $rotation);
+            break;
+        case "scale":
+            $scaleWidth = $_GET["newWidth"];
+            $scaleHeight = $_GET["newHeight"]; // -1 To Maintain Aspect Ratio
+            //echo "<p>$scaleWidth, $scaleHeight</p>";
+            $newImage = ImageManipulation::ScaleImage($newImage, $scaleWidth, $scaleHeight);
+            break;
+        case "resize":
+            $resizeWidth = $_GET["newWidth"];
+            $resizeHeight = $_GET["newHeight"];
+            $newImage = ImageManipulation::ResizeImage($newImage, $resizeWidth, $resizeHeight);
             break;
         default: break;
     }
