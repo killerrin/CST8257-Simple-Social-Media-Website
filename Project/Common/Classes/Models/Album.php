@@ -17,12 +17,12 @@ class Album
 
     public function __construct(?int $id, string $title, string $description, $dateUpdated, string $ownerId, string $accessibilityCode)
     {
-        $this->Album_Id = $id;
-        $this->Title = $title;
-        $this->Accessibility_Code = $accessibilityCode;
-        $this->Description = $description;
-        $this->Owner_Id = $ownerId;
+        $this->Album_Id = htmlspecialchars($id);
+        $this->Title = htmlspecialchars($title);
+        $this->Description = htmlspecialchars($description);
         $this->Date_Updated = $dateUpdated;
+        $this->Owner_Id = htmlspecialchars($ownerId);
+        $this->Accessibility_Code = htmlspecialchars($accessibilityCode);
     }
 
     public function GetAccessibility(DBAccessibilityRepository $repo) {

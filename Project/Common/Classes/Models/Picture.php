@@ -19,9 +19,9 @@ class Picture
     {
         $this->Picture_Id = $pictureId;
         $this->Album_Id = $albumId;
-        $this->FileName = $fileName;
-        $this->Title = $title;
-        $this->Description = $description;
+        $this->FileName = htmlspecialchars($fileName);
+        $this->Title = htmlspecialchars($title);
+        $this->Description = htmlspecialchars($description);
         $this->Date_Added = $dateAdded;
     }
 

@@ -15,9 +15,9 @@ class Friendship
     public $Status_Code;
 
     public function __construct(?string $friendRequesterId, string $friendRequesteeId, string $statusCode) {
-        $this->Friend_RequesterId = $friendRequesterId;
-        $this->Friend_RequesteeId = $friendRequesteeId;
-        $this->Status_Code = $statusCode;
+        $this->Friend_RequesterId = htmlspecialchars($friendRequesterId);
+        $this->Friend_RequesteeId = htmlspecialchars($friendRequesteeId);
+        $this->Status_Code = htmlspecialchars($statusCode);
     }
 
     public function GetUserRequester(DBUserRepository $repo) {

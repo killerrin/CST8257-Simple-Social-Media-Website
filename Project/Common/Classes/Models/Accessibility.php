@@ -14,7 +14,7 @@ class Accessibility
     public $Description;
 
     public function __construct(?string $id, string $description) {
-        $this->Accessibility_Code = $id;
-        $this->Description = $description;
+        $this->Accessibility_Code = htmlspecialchars($id);
+        $this->Description = htmlspecialchars($description);
     }
 }
