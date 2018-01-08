@@ -39,7 +39,7 @@ $dbManager->close();
             <h2 id="imageTitle"></h2>
             <div class="col-xs-9" id="images">
                 <div>
-                    <img id="displayImage" src="#" />
+                    <img class="img-responsive" id="displayImage" src="#" />
                 </div>
                 <div id="carousel">
 
