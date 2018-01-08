@@ -14,7 +14,7 @@ class Friendship
     public $Friend_RequesteeId;
     public $Status_Code;
 
-    public function __construct(string $friendRequesterId, string $friendRequesteeId, string $statusCode) {
+    public function __construct(?string $friendRequesterId, string $friendRequesteeId, string $statusCode) {
         $this->Friend_RequesterId = $friendRequesterId;
         $this->Friend_RequesteeId = $friendRequesteeId;
         $this->Status_Code = $statusCode;

@@ -13,7 +13,7 @@ class FriendshipStatus
     public $Status_Code;
     public $Description;
 
-    public function __construct(string $id, string $description) {
+    public function __construct(?string $id, string $description) {
         $this->Status_Code = $id;
         $this->Description = $description;
     }
