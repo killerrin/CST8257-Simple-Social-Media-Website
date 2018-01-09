@@ -101,3 +101,12 @@ body {
         text-align: center;
         margin-top: 10px;
     }
+
+#commentsContainer {
+    max-height: 40vh;
+}
+
+#description {
+    max-height: 15vh;
+    overflow-y: scroll;
+}

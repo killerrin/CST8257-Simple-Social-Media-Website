@@ -35,6 +35,7 @@ function loadImage(e) {
 
 
     var picture = function(target, pictures) {
+        console.log(target, pictures);
         return pictures.filter(function(picture) {
             if (picture.Picture_Id.toString() === $(target).attr("data-id")) {
                 return picture;
@@ -74,11 +75,32 @@ function appendComment(comment) {
         });
 }
 
+function postComment() {
+    $.post("API/CommentUtilities.php",
+        {
+            userID: $("#userId").val(),
+            pictureID: $("#displayImage").attr("data-id"),
+            comment: $("#commentText").val()
+        },
+        function(data) {
+            if (data) {
+                $("#commentText").val("");
+                $("#commentsContainer").prepend("<div class='alert alert-success'><p><span class='glyphicon glyphicon-thumbs-up'></span> Comment posted successfully!</p></div>");
+            }
+            else {
+                $("#commentsContainer").prepend("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> An error occurred!</p></div>");
+            }
+            loadImage({ target: $(`img[data-id='${$("#displayImage").attr("data-id")}']`)[0] }, Pictures);
+        });
+}
+
 
 
 //load big image, description, and comments on click
 
 $(document).on("click", ".thumbnail", loadImage);
+
+$(document).on("click", "#submitComment", postComment);
 
 
 //populate carousel and default image, then repopulate on change

@@ -52,8 +52,16 @@ $dbManager->close();
                 </div>
                 <div>
                     <h5>Comments:</h5>
-                    <div id="commentsContainer">
+                    <div id="commentsContainer" style="overflow-y: scroll;">
 
+                    </div>
+                    <div id="commentForm" style="position: sticky; bottom: 0">
+                        <div class="form-group">
+                            <textarea id="commentText" placeholder="Leave comment..." class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="submitComment" class="btn btn-primary">Add Comment</button>
+                        </div>
                     </div>
                 </div>
             </div>
