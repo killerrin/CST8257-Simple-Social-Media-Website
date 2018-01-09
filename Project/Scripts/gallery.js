@@ -51,8 +51,6 @@ function loadImage(e) {
             if (comments.length === 0) {
                 $("#commentsContainer").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no comments!</p></div>");
             }
-            comments.sort(function (a, b) { return new Date(a.Date) - (b.Date) });
-            comments.map(function (x) { x.authorName = getCommentAuthor(x); return x; });
             comments.forEach(appendComment);
         });
 
@@ -69,16 +67,9 @@ function clearPage() {
 }
 
 //TODO: maybe cache author names so there are less ajax requests made
-function getCommentAuthor(comment) {
-    $.ajax("API/CommentUtilities.php?userID="+comment.Author_Id)
-        .done(function(name) {
-            return name;
-        });
-}
-
 function appendComment(comment) {
     var container = $("#commentsContainer");
-    container.append(`<div class='comment' data-comment-id='${comment.Comment_Id}'><span class='poster distinct'>${name} (${comment.Date}): </span><p>${comment.Comment_Text}</p></div>`);
+    container.append(`<div class='comment' data-comment-id='${comment.Comment_Id}'><span class='poster distinct'>${comment.authorName} (${comment.Date}): </span><p>${comment.Comment_Text}</p></div>`);
 }
 
 function postComment() {

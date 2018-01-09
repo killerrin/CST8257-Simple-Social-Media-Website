@@ -28,6 +28,7 @@ if ($loggedInUser->User_Id == $albumUser->User_Id) {
     $comments = $picture->GetAllComments($commentRepo);
     foreach ($comments as $value)
     {
+        $value->authorName = $userRepo->getID($value->Author_Id)->Name;
         array_push($data, $value);
     }
 }
@@ -38,6 +39,7 @@ else {
             $comments = $picture->GetAllComments($commentRepo);
             foreach ($comments as $value)
             {
+                $value->authorName = $userRepo->getID($value->Author_Id)->Name;
                 array_push($data, $value);
             }
         }
