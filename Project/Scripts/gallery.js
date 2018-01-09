@@ -5,8 +5,10 @@ function populateCarousel() {
     var userID = $("#userId").val();
     var ownerID = $("#ownerId").val();
     var albumID = $("#albumSelect").val();
+    $("#carousel").append("<img src='Contents/img/loading.svg' alt='loading' width='40px' />");
     jQuery.ajax("API/GetAlbumPicturesJson.php?loggedInUserID="+encodeURIComponent(userID)+"&albumUserID="+encodeURIComponent(ownerID)+"&albumID="+encodeURIComponent(albumID))
         .done(function(pictures) {
+            $("#carousel").empty();
             Pictures = pictures;
             Array.from(pictures).forEach(function(picture) {
                 var thumbnailSrc = "Pictures/" + ownerID + "/" + albumID + "/Thumbnail/" + picture.FileName;
@@ -45,6 +47,8 @@ function loadImage(e) {
     // Populate other fields
     var userID = $("#userId").val();
     var ownerID = $("#ownerId").val();
+    $("#commentsContainer").empty();
+    $("#commentsContainer").append("<img src='Contents/img/loading.svg' alt='loading' width='40px' />");
     $.ajax("API/GetPictureCommentsJson.php?loggedInUserID="+encodeURIComponent(userID)+"&albumUserID="+encodeURIComponent(ownerID)+"&pictureID="+encodeURIComponent(target.attr("data-id")))
         .done(function(comments) {
             $("#commentsContainer").empty();
