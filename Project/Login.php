@@ -3,6 +3,10 @@
 
 <?php
 $loginError = false;
+
+if (isset($_GET['returnUrl'])) {
+    $_SESSION['returnUrl'] = urldecode($_GET['returnUrl']);
+}
 if ($_POST) {
     $studentID = $_POST["inputStudentNumber"];
     $password = $_POST["inputPassword"];
@@ -25,7 +29,8 @@ if ($_POST) {
             // Redirect to the proper page
             //ob_end_clean( ); // Run this if the Redirect doesn't work
 
-            $returnUrl = $_GET["returnUrl"];
+            $returnUrl = $_SESSION['returnUrl'];
+            unset($_SESSION['returnUrl']);
             if (empty($returnUrl)) {
                 // Not specified defaults to Course Selection Page
                 header("Location: index.php");
