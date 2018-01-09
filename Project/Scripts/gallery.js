@@ -35,7 +35,6 @@ function loadImage(e) {
 
 
     var picture = function(target, pictures) {
-        console.log(target, pictures);
         return pictures.filter(function(picture) {
             if (picture.Picture_Id.toString() === $(target).attr("data-id")) {
                 return picture;
@@ -52,6 +51,8 @@ function loadImage(e) {
             if (comments.length === 0) {
                 $("#commentsContainer").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no comments!</p></div>");
             }
+            comments.sort(function (a, b) { return new Date(a.Date) - (b.Date) });
+            comments.map(function (x) { x.authorName = getCommentAuthor(x); return x; });
             comments.forEach(appendComment);
         });
 
@@ -67,12 +68,17 @@ function clearPage() {
     $("#displayImage").attr("src", "https://via.placeholder.com/1024x800?text=No+Images!");
 }
 
-function appendComment(comment) {
+//TODO: maybe cache author names so there are less ajax requests made
+function getCommentAuthor(comment) {
     $.ajax("API/CommentUtilities.php?userID="+comment.Author_Id)
         .done(function(name) {
-            var container = $("#commentsContainer");
-            container.append(`<div class='comment' data-comment-id='${comment.Comment_Id}'><span class='poster distinct'>${name} (${comment.Date}): </span><p>${comment.Comment_Text}</p></div>`);
+            return name;
         });
+}
+
+function appendComment(comment) {
+    var container = $("#commentsContainer");
+    container.append(`<div class='comment' data-comment-id='${comment.Comment_Id}'><span class='poster distinct'>${name} (${comment.Date}): </span><p>${comment.Comment_Text}</p></div>`);
 }
 
 function postComment() {
