@@ -56,6 +56,29 @@ and open the template in the editor.
     transform: scale(-1, 1);
 }
 
+.img-container:hover img {
+    opacity: 0.5;
+}
+
+.img-container .img-link-container {
+    margin-top: -60px;
+    padding-bottom: 60px;
+    text-align: center;
+}
+
+.img-container:hover .img-link-container {
+    padding-bottom: 16px;
+}
+
+.img-container .img-link-container a {
+    display: none;
+    padding: 10px;
+}
+
+.img-container:hover .img-link-container a {
+    display: inline;
+}
+
 /* Carousel */
 #carousel {
     width: 100%;

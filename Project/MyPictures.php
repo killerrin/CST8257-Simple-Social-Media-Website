@@ -34,8 +34,25 @@ $dbManager->close();
             <div>
                 <h2 id="imageTitle"></h2>
                 <div class="col-xs-9" id="images">
-                    <div>
+                    <div class="img-container">
                         <img class="img-responsive" id="displayImage" src="#" />
+                        <div id="currentImageLinkContainer" class="img-link-container">
+                            <a id="rotateLeftLink" class="imageButton" data-action="rotateLeft" href="#">
+                                <span class="glyphicon glyphicon-repeat gly-flip-horizontal"></span>
+                            </a>
+                            <a id="rotateRightLink" class="imageButton" data-action="rotateRight" href="#">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </a>
+                            <a id="downloadLink" class="imageButton" data-action="download" href="" download>
+                                <span class="glyphicon glyphicon-save"></span>
+                            </a>
+                            <a id="deleteLink" class="imageButton" data-action="delete" href="#">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                            <a id="saveLink" class="imageButton" data-action="save" href="#">
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </a>
+                        </div>
                     </div>
                     <div id="carousel">
 

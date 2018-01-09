@@ -34,6 +34,7 @@ function loadImage(e) {
     displayImage.attr("data-original-src", target.attr("data-original-src"));
     displayImage.attr("data-gallery-src", target.attr("data-gallery-src"));
     displayImage.attr("data-thumbnail-src", target.attr("data-thumbnail-src"));
+    $("#downloadLink").attr("href", target.attr("data-original-src"));
 
 
     var picture = function(target, pictures) {
