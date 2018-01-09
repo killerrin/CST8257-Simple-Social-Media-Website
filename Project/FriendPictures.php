@@ -47,11 +47,11 @@ $dbManager->close();
             </div>
             <div class="col-xs-3" id="text">
                 <div id="descriptionContainer">
-                    <h5>Description:</h5>
+                    <h4>Description:</h4>
                     <p id="description"></p>
                 </div>
                 <div>
-                    <h5>Comments:</h5>
+                    <h4>Comments:</h4>
                     <div id="commentsContainer" style="overflow-y: scroll;">
 
                     </div>
