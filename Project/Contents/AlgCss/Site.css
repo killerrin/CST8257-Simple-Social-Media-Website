@@ -110,3 +110,7 @@ body {
     max-height: 15vh;
     overflow-y: scroll;
 }
+
+#commentsContainer div.comment {
+    word-wrap: break-word;
+}
