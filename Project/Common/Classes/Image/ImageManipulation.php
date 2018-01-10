@@ -224,7 +224,8 @@ class ImageManipulation
 
     public static function GetImageType($filePath) : int
     {
-        return exif_imagetype($filePath);
+        $imageInfo = getimagesize($filePath);
+        return $imageInfo[2];
     }
 
     public static function GetImageData($filePath)
