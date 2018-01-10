@@ -12,7 +12,7 @@ $accessibilityMode = $accessibilityRepo->getAll();
 // Add album to database on submission
 if (!empty($_POST)) {
     $emptyFieldError = false;
-    if (empty($_POST['title']) || empty($_POST['accessibility']) || empty($_POST['description']))
+    if (empty($_POST['title']) || empty($_POST['accessibility']))
         $emptyFieldError = true;
     if (!$emptyFieldError) {
         $albumRepo = new DBAlbumRepository($dbManager);
