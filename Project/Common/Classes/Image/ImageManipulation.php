@@ -25,9 +25,10 @@ class ImageManipulation
 
     // Database
     public $DBManager;
+    public $UserRepo;
     public $AlbumRepo;
     public $PictureRepo;
-    public $UserRepo;
+    public $CommentsRepo;
 
     public function __construct($userID, $albumID, DBManager $dbManager, $createFolders) {
         $this->User_Id = $userID;
@@ -38,6 +39,7 @@ class ImageManipulation
         $this->AlbumRepo = new DBAlbumRepository($this->DBManager);
         $this->PictureRepo = new DBPictureRepository($this->DBManager);
         $this->UserRepo = new DBUserRepository($this->DBManager);
+        $this->CommentsRepo = new DBCommentRepository($this->DBManager);
 
         if ($createFolders) {
             $this->CreateFolderStructure();
@@ -225,6 +227,14 @@ class ImageManipulation
         unlink($albumThumbnailFilePath);
 
         // Remove from DB
+        // Get rid of all the comments on the picture
+        $comments = $picture->GetAllComments($this->CommentsRepo);
+        foreach ($comments as $value)
+        {
+            $this->CommentsRepo->delete($value);
+        }
+
+        // Delete the Picture
         $this->PictureRepo->delete($picture);
     }
 
