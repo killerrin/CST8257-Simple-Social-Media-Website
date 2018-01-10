@@ -18,7 +18,8 @@ if (!empty($_POST)) {
     if (!$emptyFieldError) {
         $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $_POST['album'], $dbManager, true);
         foreach ((array) $_FILES['file']['name'] as $index => $value) {
-            $imageManipulation->SavePictures(((array) $_FILES['file']['tmp_name'])[$index], new Picture(null, $_POST['album'], $value, $_POST['title'], $_POST['description'], date('Y-m-d H:i:s')));
+            $rand = rand(1, 99).rand(1, 99).rand(1, 9);
+            $imageManipulation->SavePictures(((array) $_FILES['file']['tmp_name'])[$index], new Picture(null, $_POST['album'], $rand.$value, $_POST['title'], $_POST['description'], date('Y-m-d H:i:s')));
 
         }
         $updatedAlbum = $albumRepo->getID($_POST['album']);
