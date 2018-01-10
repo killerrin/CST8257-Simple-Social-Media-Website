@@ -15,12 +15,22 @@ $dbManager->connect();
 $albums = $albumRepo->getAllForUser($LoggedInUser->User_Id);
 
 // Handle delete action
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['pictureID'])) {
-    $picture = $pictureRepo->getID($_GET['pictureID']);
-    if (isset($picture)) {
-        $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $picture->Album_Id, $dbManager, false);
+if (isset($_GET['action']) && isset($_GET['pictureID'])) {
+    $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $picture->Album_Id, $dbManager, false);
+    $picture = $pictureRepo->getID(urldecode($_GET['pictureID']));
 
-        $imageManipulation->DeletePictures($picture);
+    if ($_GET['action'] == 'delete') {
+        if (isset($picture)) {
+            $imageManipulation->DeletePictures($picture);
+        }
+    }
+
+    if ($_GET['action'] == 'save' && isset($_GET['rotation'])) {
+        if (isset($picture)) {
+            $album = $albumRepo->getID($picture->Album_Id);
+            $url = str_replace("\\",'/',"http://".$_SERVER['HTTP_HOST'].substr(getcwd(),strlen($_SERVER['DOCUMENT_ROOT'])))."/API/DisplayPicture.php?filePath=".urlencode($imageManipulation->CreateFilePath($imageManipulation->GetOriginalFolder(), $picture->FileName))."&rotation=".urldecode($_GET['rotation']);
+            $imageManipulation->SavePictures($url, $picture);
+        }
     }
 }
 

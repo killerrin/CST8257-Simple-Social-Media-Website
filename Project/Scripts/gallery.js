@@ -158,6 +158,15 @@ function imageButtonHandler(e) {
 
                 window.location.href = '?' + params.join('&');
                 return;
+            case "save":
+                var params = [
+                    "action=save",
+                    "pictureID=" +encodeURIComponent(currentPicture.Picture_Id),
+                    "rotation=" + encodeURIComponent(currentPicture.currentRotation)
+                ];
+
+                window.location.href = '?' + params.join('&');
+                return;
             default:
                 break;
         }
