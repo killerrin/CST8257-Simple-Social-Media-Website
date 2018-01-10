@@ -112,19 +112,52 @@ class ImageManipulation
         return false;
     }
 
+    public function RotateAndSavePictures(Picture $picture, float $rotation) {
+        // Get File Paths
+        $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
+        $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
+        $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
+
+        // Copy the Image
+        $originalPicture = ImageManipulation::CopyImage($originalFilePath);
+        $galleryPicture = ImageManipulation::CopyImage($galleryFilePath);
+        $thumbnailPicture = ImageManipulation::CopyImage($albumThumbnailFilePath);
+
+        // Rotate Images
+        $originalPicture = ImageManipulation::RotateImage($originalPicture, $rotation);
+        $galleryPicture = ImageManipulation::RotateImage($galleryPicture, $rotation);
+        $thumbnailPicture = ImageManipulation::RotateImage($thumbnailPicture, $rotation);
+
+        // Save the Images
+        $imageInfo = getimagesize($originalFilePath);
+        if ($imageInfo) {
+            switch ($imageInfo[2]) {
+                case IMAGETYPE_PNG:
+                    imagepng($originalPicture, $originalFilePath);
+                    imagepng($galleryPicture, $galleryFilePath);
+                    imagepng($thumbnailPicture, $albumThumbnailFilePath);
+                    break;
+                case IMAGETYPE_JPEG:
+                    imagejpeg($originalPicture, $originalFilePath);
+                    imagejpeg($galleryPicture, $galleryFilePath);
+                    imagejpeg($thumbnailPicture, $albumThumbnailFilePath);
+                    break;
+                case IMAGETYPE_GIF:
+                    imagegif($originalPicture, $originalFilePath);
+                    imagegif($galleryPicture, $galleryFilePath);
+                    imagegif($thumbnailPicture, $albumThumbnailFilePath);
+                    break;
+                default: break;
+            }
+        }
+    }
+
     public function SavePictures($tmpFilePath, Picture $picture)
     {
         //echo $tmpFilePath; // For Testing
         $originalFilePath = $this->CreateFilePath($this->GetOriginalFolder(), $picture->FileName);
         $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
-
-        // If the image is coming from the server, Save it first
-        if (strstr($tmpFilePath, "DisplayPicture.php")) //preg_match('/DisplayPicture.php/', $tmpFilePath)) 
-        {
-            file_put_contents($originalFilePath, fopen($tmpFilePath, 'r'));
-            $tmpFilePath = $originalFilePath;
-        }
 
         // Copy/Move the file out of the temporary location and into the Original Folder
         if ($this->CopyImageAndSave($tmpFilePath, $originalFilePath)) { //if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
@@ -229,7 +262,7 @@ class ImageManipulation
         return $fileName;
     }
 
-    public static function GetImageType($filePath) : int
+    public static function GetImageType($filePath) : ?int
     {
         $imageInfo = getimagesize($filePath);
         return $imageInfo[2];
@@ -290,6 +323,4 @@ class ImageManipulation
         imagecopyresampled($newImage, $imageResource, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
         return $newImage;
     }
-
-
 }
