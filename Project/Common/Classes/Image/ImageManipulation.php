@@ -72,18 +72,21 @@ class ImageManipulation
         if (!is_dir($thumbPath)) { mkdir($thumbPath, 0777, true); }
     }
 
-    public function DeleteRootFolder() { if (is_dir($this->GetRootFolder())) { rmdir($this->GetRootFolder()); } }
-    public function DeleteRootUserFolder() { if (is_dir($this->GetRootUserFolder())) { rmdir($this->GetRootUserFolder()); } }
-    public function DeleteRootAlbumFolder() { if (is_dir($this->GetRootAlbumFolder())) { rmdir($this->GetRootAlbumFolder()); } }
-    public function DeleteOriginalFolder() { if (is_dir($this->GetOriginalFolder())) { rmdir($this->GetOriginalFolder()); } }
-    public function DeleteGalleryFolder() { if (is_dir($this->GetGalleryFolder())) { rmdir($this->GetGalleryFolder()); } }
-    public function DeleteThumbnailFolder() { if (is_dir($this->GetThumbnailFolder())) { rmdir($this->GetThumbnailFolder()); } }
+    public function DeleteRootFolder()      { try { if (is_dir($this->GetRootFolder())) { rmdir($this->GetRootFolder()); }            } catch(Exception $e){} }
+    public function DeleteRootUserFolder()  { try { if (is_dir($this->GetRootUserFolder())) { rmdir($this->GetRootUserFolder()); }    } catch(Exception $e){} }
+    public function DeleteRootAlbumFolder() { try { if (is_dir($this->GetRootAlbumFolder())) { rmdir($this->GetRootAlbumFolder()); }  } catch(Exception $e){} }
+    public function DeleteOriginalFolder()  { try { if (is_dir($this->GetOriginalFolder())) { rmdir($this->GetOriginalFolder()); }    } catch(Exception $e){} }
+    public function DeleteGalleryFolder()   { try { if (is_dir($this->GetGalleryFolder())) { rmdir($this->GetGalleryFolder()); }      } catch(Exception $e){} }
+    public function DeleteThumbnailFolder() { try { if (is_dir($this->GetThumbnailFolder())) { rmdir($this->GetThumbnailFolder()); }  } catch(Exception $e){} }
     public function DeleteFolder($path) {
-        $files = glob($path . '/*');
-        foreach ($files as $file) {
-            is_dir($file) ? $this->DeleteFolder($file) : unlink($file);
+        try {
+            $files = glob($path . '/*');
+            foreach ($files as $file) {
+                is_dir($file) ? $this->DeleteFolder($file) : unlink($file);
+            }
+            rmdir($path);
         }
-        rmdir($path);
+        catch(Exception $e) { }
         return;
     }
 
@@ -222,9 +225,12 @@ class ImageManipulation
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
 
         // Delete the files
-        unlink($originalFilePath);
-        unlink($galleryFilePath);
-        unlink($albumThumbnailFilePath);
+        try {
+            unlink($originalFilePath);
+            unlink($galleryFilePath);
+            unlink($albumThumbnailFilePath);
+        }
+        catch (Exception $e){ }
 
         // Remove from DB
         // Get rid of all the comments on the picture
