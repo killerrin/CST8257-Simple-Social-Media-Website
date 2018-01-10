@@ -38,6 +38,8 @@ if (isset($_GET['action']) && isset($_GET['pictureID'])) {
 
 $dbManager->close();
 ?>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
     <div class="container">
         <h1>My Pictures</h1>
         <?php if (count($albums) == 0): ?>

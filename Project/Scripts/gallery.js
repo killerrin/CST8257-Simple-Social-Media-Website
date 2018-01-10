@@ -26,7 +26,7 @@ function populateCarousel() {
                 picture.thumbnailSrc = thumbnailSrc = "Pictures/" + ownerID + "/" + albumID + "/Thumbnail/" + picture.FileName;
                 picture.originalSrc = originalSrc = "Pictures/" + ownerID + "/" + albumID + "/Original/" + picture.FileName;
                 picture.gallerySrc = gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
-                $("#carousel").append(`<div class="slide"><img class="thumbnail img-thumbnail" src="${thumbnailSrc}" data-id="${picture.Picture_Id}" data-name="${picture.Title}" data-original-src="${originalSrc}" data-gallery-src="${gallerySrc}" data-thumbnail-src="${thumbnailSrc}" alt="${picture.Title} "/></div>`)
+                $("#carousel").append(`<div class="slide"><img class="thumbnail img-thumbnail" src="${thumbnailSrc + "?" +(new Date().getTime())}" data-id="${picture.Picture_Id}" data-name="${picture.Title}" data-original-src="${originalSrc}" data-gallery-src="${gallerySrc}" data-thumbnail-src="${thumbnailSrc}" alt="${picture.Title} "/></div>`)
             });
             if (Array.from(pictures).length === 0) {
                 $("#carousel").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no pictures in the album!</p></div>");
@@ -47,7 +47,7 @@ function loadImage(e) {
     // Update current image to clicked image
     var target = $(e.target);
     var displayImage = $("#displayImage");
-    displayImage.attr("src", target.attr("data-gallery-src"));
+    displayImage.attr("src", target.attr("data-gallery-src") + "?" + (new Date().getTime()));
     displayImage.attr("data-id", target.attr("data-id"));
     displayImage.attr("data-name", target.attr("data-name"));
     displayImage.attr("data-original-src", target.attr("data-original-src"));
