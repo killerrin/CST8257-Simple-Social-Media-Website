@@ -18,9 +18,10 @@ function populateCarousel() {
                 picture.rotateRight = function() {
                     this.currentRotation -= 90;
                 };
-                var thumbnailSrc = "Pictures/" + ownerID + "/" + albumID + "/Thumbnail/" + picture.FileName;
-                var originalSrc = "Pictures/" + ownerID + "/" + albumID + "/Original/" + picture.FileName;
-                var gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
+                var thumbnailSrc, originalSrc, gallerySrc;
+                picture.thumbnailSrc = thumbnailSrc = "Pictures/" + ownerID + "/" + albumID + "/Thumbnail/" + picture.FileName;
+                picture.originalSrc = originalSrc = "Pictures/" + ownerID + "/" + albumID + "/Original/" + picture.FileName;
+                picture.gallerySrc = gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
                 $("#carousel").append(`<div class="slide"><img class="thumbnail img-thumbnail" src="${thumbnailSrc}" data-id="${picture.Picture_Id}" data-name="${picture.Title}" data-original-src="${originalSrc}" data-gallery-src="${gallerySrc}" data-thumbnail-src="${thumbnailSrc}" alt="${picture.Title} "/></div>`)
             });
             if (Array.from(pictures).length === 0) {
@@ -109,49 +110,57 @@ function imageButtonHandler(e) {
     // Cache the variables
     var $this = $(e.currentTarget);
     var currentImage = $("#displayImage");
-    var downloadLink = $("#downloadLink");
+    var currentPicture;
+    Pictures.forEach(function(picture) {
+        if (picture.Picture_Id == currentImage.attr("data-id")) {
+            currentPicture = picture;
+        }
+    });
 
-    switch ($this.attr("data-action")) {
-        case "rotateLeft":
-            currentPicture.rotateLeft();
-            var params = [
-                "action=rotateLeft",
-                "currentRotation=" + currentPicture.currentRotation,
-                "filePath=" + encodeURIComponent(currentPicture.albumLink)
-            ];
+    if (currentPicture != null) {
+        albumLink = "Pictures/"
+        switch ($this.attr("data-action")) {
+            case "rotateLeft":
+                currentPicture.rotateLeft();
+                var params = [
+                    "action=rotateLeft",
+                    "rotation=" + currentPicture.currentRotation,
+                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                ];
 
-            var url = "http://" + window.location.host + "/API/DisplayPicture.php" + '?' + params.join('&');
-            console.log(url);
-            console.log(params.join("&"));
-            currentImage.attr("src", url);
-            //downloadLink.attr("href", url);
+                var url = "API/DisplayPicture.php" + '?' + params.join('&');
+                console.log(url);
+                console.log(params.join("&"));
+                currentImage.attr("src", url);
 
-            return;
-        case "rotateRight":
-            currentPicture.rotateRight();
-            var params = [
-                "action=rotateRight",
-                "currentRotation=" + currentPicture.currentRotation,
-                "filePath=" + encodeURIComponent(currentPicture.albumLink)
-            ];
+                return;
+            case "rotateRight":
+                currentPicture.rotateRight();
+                var params = [
+                    "action=rotateRight",
+                    "rotation=" + currentPicture.currentRotation,
+                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                ];
 
-            var url = "http://" + window.location.host + "/API/DisplayPicture.php" + '?' + params.join('&');
-            console.log(url);
-            console.log(params.join("&"));
-            currentImage.attr("src", url);
-            //downloadLink.attr("href", url);
+                var url = "API/DisplayPicture.php" + '?' + params.join('&');
+                console.log(url);
+                console.log(params.join("&"));
+                currentImage.attr("src", url);
 
-            return;
-        case "download": return;
-        case "delete":
-            var params = [
-                "action=delete",
-                "filePath=" + encodeURIComponent(currentPicture.thumbLink)
-            ];
+                return;
+            case "download":
+                return;
+            case "delete":
+                var params = [
+                    "action=delete",
+                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                ];
 
-            window.location.href = "http://" + window.location.host + window.location.pathname + '?' + params.join('&');
-            return;
-        default: break;
+                window.location.href = '?' + params.join('&');
+                return;
+            default:
+                break;
+        }
     }
 }
 
