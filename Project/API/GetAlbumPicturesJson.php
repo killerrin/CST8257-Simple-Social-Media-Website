@@ -23,20 +23,22 @@ $loggedInUser = $userRepo->getID($loggedInUserID);
 $albumUser = $userRepo->getID($albumUserID);
 $album = $albumRepo->getID($albumID);
 
-if ($loggedInUser->User_Id == $albumUser->User_Id) {
-    $pictures = $album->GetPictures($pictureRepo);
-    foreach ($pictures as $value)
-    {
-        array_push($data, $value);
+if (!empty($album)) {
+    if ($loggedInUser->User_Id == $albumUser->User_Id) {
+        $pictures = $album->GetPictures($pictureRepo);
+        foreach ($pictures as $value)
+        {
+            array_push($data, $value);
+        }
     }
-}
-else {
-    if (Friendship::AreUsersFriends($friendshipRepo, $loggedInUser, $albumUser)) {
-        if ($album->Accessibility_Code == "shared") {
-            $pictures = $album->GetPictures($pictureRepo);
-            foreach ($pictures as $value)
-            {
-                array_push($data, $value);
+    else {
+        if (Friendship::AreUsersFriends($friendshipRepo, $loggedInUser, $albumUser)) {
+            if ($album->Accessibility_Code == "shared") {
+                $pictures = $album->GetPictures($pictureRepo);
+                foreach ($pictures as $value)
+                {
+                    array_push($data, $value);
+                }
             }
         }
     }
