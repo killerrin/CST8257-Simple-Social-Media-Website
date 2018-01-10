@@ -57,17 +57,17 @@ class ImageManipulation
         $rootPath = $this->GetRootUserFolder();
         $rootUserPath = $this->GetRootUserFolder();
         $rootAlbumPath = $this->GetRootAlbumFolder();
-        if (!is_dir($rootPath)) { mkdir($rootPath, 0755, true); }
-        if (!is_dir($rootUserPath)) { mkdir($rootUserPath, 0755, true); }
-        if (!is_dir($rootAlbumPath)) { mkdir($rootAlbumPath, 0755, true); }
+        if (!is_dir($rootPath)) { mkdir($rootPath, 0777, true); }
+        if (!is_dir($rootUserPath)) { mkdir($rootUserPath, 0777, true); }
+        if (!is_dir($rootAlbumPath)) { mkdir($rootAlbumPath, 0777, true); }
 
         // Create Internal Seperators
         $originalPath = $this->GetOriginalFolder();
         $galleryPath = $this->GetGalleryFolder();
         $thumbPath = $this->GetThumbnailFolder();
-        if (!is_dir($originalPath)) { mkdir($originalPath, 0755, true); }
-        if (!is_dir($galleryPath)) { mkdir($galleryPath, 0755, true); }
-        if (!is_dir($thumbPath)) { mkdir($thumbPath, 0755, true); }
+        if (!is_dir($originalPath)) { mkdir($originalPath, 0777, true); }
+        if (!is_dir($galleryPath)) { mkdir($galleryPath, 0777, true); }
+        if (!is_dir($thumbPath)) { mkdir($thumbPath, 0777, true); }
     }
 
     public function DeleteRootFolder() { if (is_dir($this->GetRootFolder())) { rmdir($this->GetRootFolder()); } }
