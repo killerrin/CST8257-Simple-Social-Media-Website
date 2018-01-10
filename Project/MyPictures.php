@@ -13,6 +13,17 @@ $commentRepo = new DBCommentRepository($dbManager);
 
 $dbManager->connect();
 $albums = $albumRepo->getAllForUser($LoggedInUser->User_Id);
+
+// Handle delete action
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['pictureID'])) {
+    $picture = $pictureRepo->getID($_GET['pictureID']);
+    if (isset($picture)) {
+        $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $picture->Album_Id, $dbManager, false);
+
+        $imageManipulation->DeletePictures($picture);
+    }
+}
+
 $dbManager->close();
 ?>
     <div class="container">
