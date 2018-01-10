@@ -70,12 +70,12 @@ class ImageManipulation
         if (!is_dir($thumbPath)) { mkdir($thumbPath, 0755, true); }
     }
 
-    public function DeleteRootFolder() { rmdir($this->GetRootFolder()); }
-    public function DeleteRootUserFolder() { rmdir($this->GetRootUserFolder()); }
-    public function DeleteRootAlbumFolder() { rmdir($this->GetRootAlbumFolder()); }
-    public function DeleteOriginalFolder() { rmdir($this->GetOriginalFolder()); }
-    public function DeleteGalleryFolder() { rmdir($this->GetGalleryFolder()); }
-    public function DeleteThumbnailFolder() { rmdir($this->GetThumbnailFolder()); }
+    public function DeleteRootFolder() { if (is_dir($this->GetRootFolder())) { rmdir($this->GetRootFolder()); } }
+    public function DeleteRootUserFolder() { if (is_dir($this->GetRootUserFolder())) { rmdir($this->GetRootUserFolder()); } }
+    public function DeleteRootAlbumFolder() { if (is_dir($this->GetRootAlbumFolder())) { rmdir($this->GetRootAlbumFolder()); } }
+    public function DeleteOriginalFolder() { if (is_dir($this->GetOriginalFolder())) { rmdir($this->GetOriginalFolder()); } }
+    public function DeleteGalleryFolder() { if (is_dir($this->GetGalleryFolder())) { rmdir($this->GetGalleryFolder()); } }
+    public function DeleteThumbnailFolder() { if (is_dir($this->GetThumbnailFolder())) { rmdir($this->GetThumbnailFolder()); } }
 
     public function CountPictures() : int
     {
