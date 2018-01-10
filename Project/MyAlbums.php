@@ -27,22 +27,31 @@ if (isset($_GET['delete'])) {
     $albumToDelete = $albumRepo->getID($_GET['delete']);
     if ($albumToDelete->Owner_Id == $LoggedInUser->User_Id) {
         $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $albumToDelete->Album_Id, $dbManager, false);
-
-        // Delete all the Images in the Album
-        $albumPhotos = $albumToDelete->GetPictures($pictureRepo);
-        foreach ($albumPhotos as $photo)
-        {
-            $imageManipulation->DeletePictures($photo);
+//
+//        // Delete all the Images in the Album
+//        $albumPhotos = $albumToDelete->GetPictures($pictureRepo);
+//        foreach ($albumPhotos as $photo)
+//        {
+//            $imageManipulation->DeletePictures($photo);
+//        }
+//
+//        // Delete the Album
+//        $result = $albumRepo->delete($albumToDelete);
+//
+//        // Delete the Album Folder
+//        $imageManipulation->DeleteOriginalFolder();
+//        $imageManipulation->DeleteGalleryFolder();
+//        $imageManipulation->DeleteThumbnailFolder();
+//        $imageManipulation->DeleteRootAlbumFolder();
+        if (!empty($albumToDelete)) {
+            $pictures = $albumToDelete->GetPictures($pictureRepo);
+            foreach ($pictures as $picture) {
+                $imageManipulation->DeletePictures($picture);
+            }
+            $albumRepo->delete($albumToDelete);
+            $imageManipulation->DeleteFolder($imageManipulation->GetRootAlbumFolder());
         }
-
-        // Delete the Album
-        $result = $albumRepo->delete($albumToDelete);
-
-        // Delete the Album Folder
-        $imageManipulation->DeleteOriginalFolder();   
-        $imageManipulation->DeleteGalleryFolder();   
-        $imageManipulation->DeleteThumbnailFolder();   
-        $imageManipulation->DeleteRootAlbumFolder();   
+        header("Location: MyAlbums.php");
     }
     else {
         $result = false;
