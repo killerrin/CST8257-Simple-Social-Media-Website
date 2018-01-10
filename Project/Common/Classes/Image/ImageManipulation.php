@@ -119,6 +119,12 @@ class ImageManipulation
         $galleryFilePath = $this->CreateFilePath($this->GetGalleryFolder(), $picture->FileName);
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
 
+        // If the image is coming from the server, Save it first
+        if (strpos($tmpFilePath, "DisplayPicture.php") !== false) {
+            file_put_contents($originalFilePath, fopen($tmpFilePath, 'r'));
+            $tmpFilePath = $originalFilePath;
+        }
+
         // Copy/Move the file out of the temporary location and into the Original Folder
         if ($this->CopyImageAndSave($tmpFilePath, $originalFilePath)) { //if (move_uploaded_file($tmpFilePath, $originalFilePath)) {
             // Gather Image Information for further steps
