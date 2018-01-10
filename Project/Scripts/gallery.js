@@ -153,7 +153,7 @@ function imageButtonHandler(e) {
             case "delete":
                 var params = [
                     "action=delete",
-                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                    "pictureID=" + encodeURIComponent(currentPicture.Picture_Id)
                 ];
 
                 window.location.href = '?' + params.join('&');
