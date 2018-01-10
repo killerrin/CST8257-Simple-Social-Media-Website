@@ -32,6 +32,8 @@ if (isset($_GET['action']) && isset($_GET['pictureID'])) {
             $imageManipulation->RotateAndSavePictures($picture, $_GET['rotation']);
         }
     }
+    header("Location: MyPictures.php");
+    die();
 }
 
 $dbManager->close();
