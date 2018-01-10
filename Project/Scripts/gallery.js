@@ -11,6 +11,13 @@ function populateCarousel() {
             $("#carousel").empty();
             Pictures = pictures;
             Array.from(pictures).forEach(function(picture) {
+                picture.currentRotation = 0;
+                picture.rotateLeft = function() {
+                    this.currentRotation += 90;
+                };
+                picture.rotateRight = function() {
+                    this.currentRotation -= 90;
+                };
                 var thumbnailSrc = "Pictures/" + ownerID + "/" + albumID + "/Thumbnail/" + picture.FileName;
                 var originalSrc = "Pictures/" + ownerID + "/" + albumID + "/Original/" + picture.FileName;
                 var gallerySrc = "Pictures/" + ownerID + "/" + albumID + "/Gallery/" + picture.FileName;
@@ -96,6 +103,57 @@ function postComment() {
         });
 }
 
+function imageButtonHandler(e) {
+    //alert("Preview Image Button Clicked: ");
+
+    // Cache the variables
+    var $this = $(e.currentTarget);
+    var currentImage = $("#displayImage");
+    var downloadLink = $("#downloadLink");
+
+    switch ($this.attr("data-action")) {
+        case "rotateLeft":
+            currentPicture.rotateLeft();
+            var params = [
+                "action=rotateLeft",
+                "currentRotation=" + currentPicture.currentRotation,
+                "filePath=" + encodeURIComponent(currentPicture.albumLink)
+            ];
+
+            var url = "http://" + window.location.host + "/API/DisplayPicture.php" + '?' + params.join('&');
+            console.log(url);
+            console.log(params.join("&"));
+            currentImage.attr("src", url);
+            //downloadLink.attr("href", url);
+
+            return;
+        case "rotateRight":
+            currentPicture.rotateRight();
+            var params = [
+                "action=rotateRight",
+                "currentRotation=" + currentPicture.currentRotation,
+                "filePath=" + encodeURIComponent(currentPicture.albumLink)
+            ];
+
+            var url = "http://" + window.location.host + "/API/DisplayPicture.php" + '?' + params.join('&');
+            console.log(url);
+            console.log(params.join("&"));
+            currentImage.attr("src", url);
+            //downloadLink.attr("href", url);
+
+            return;
+        case "download": return;
+        case "delete":
+            var params = [
+                "action=delete",
+                "filePath=" + encodeURIComponent(currentPicture.thumbLink)
+            ];
+
+            window.location.href = "http://" + window.location.host + window.location.pathname + '?' + params.join('&');
+            return;
+        default: break;
+    }
+}
 
 
 //load big image, description, and comments on click
@@ -103,6 +161,8 @@ function postComment() {
 $(document).on("click", ".thumbnail", loadImage);
 
 $(document).on("click", "#submitComment", postComment);
+
+$(document).on("click", ".imageButton", imageButtonHandler);
 
 
 //populate carousel and default image, then repopulate on change
