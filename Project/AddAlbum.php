@@ -48,7 +48,7 @@ $dbManager->close();
             <?php endif; ?>
             <?php if (isset($emptyFieldError) && $emptyFieldError): ?>
             <div class="alert alert-danger">
-                <p><span class="glyphicon glyphicon-thumbs-down"></span> All fields are required!</p>
+                <p><span class="glyphicon glyphicon-thumbs-down"></span> Title is required!</p>
             </div>
             <?php endif; ?>
             <div class="form-group">
