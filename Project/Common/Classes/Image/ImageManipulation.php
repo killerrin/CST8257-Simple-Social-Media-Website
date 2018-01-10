@@ -120,7 +120,8 @@ class ImageManipulation
         $albumThumbnailFilePath = $this->CreateFilePath($this->GetThumbnailFolder(), $picture->FileName);
 
         // If the image is coming from the server, Save it first
-        if (preg_match('/DisplayPicture.php/', $tmpFilePath)) {
+        if (strstr($tmpFilePath, "DisplayPicture.php")) //preg_match('/DisplayPicture.php/', $tmpFilePath)) 
+        {
             file_put_contents($originalFilePath, fopen($tmpFilePath, 'r'));
             $tmpFilePath = $originalFilePath;
         }
