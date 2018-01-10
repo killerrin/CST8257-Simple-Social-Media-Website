@@ -31,11 +31,17 @@ if (!empty($_POST)) {
             $friendship = $friendRepo->getID($friend->User_Id, $LoggedInUser->User_Id, 'request');
             if (!empty($friendship)) {
                 $friendship->Status_Code = 'accepted';
-                $success =$friendRepo->update($friendship);
+                $successFriend =$friendRepo->update($friendship);
             }
             else {
-                $friendship = new Friendship($LoggedInUser->User_Id, $friend->User_Id, 'request');
-                $success = $friendRepo->insert($friendship);
+                $friendship = $friendRepo->getID($LoggedInUser->User_Id, $friend->User_Id, 'request');
+                if (!empty($friendship)) {
+                    $errorMessage = "You have already sent a friend request to this user!";
+                }
+                if (!isset($errorMessage)) {
+                    $friendship = new Friendship($LoggedInUser->User_Id, $friend->User_Id, 'request');
+                    $success = $friendRepo->insert($friendship);
+                }
             }
         }
         $dbManager->close();
@@ -65,6 +71,13 @@ if (!empty($_POST)) {
     <div class="alert alert-success">
         <p>
             <span class="glyphicon glyphicon-thumbs-up"></span>Your friend request has been sent to <?php echo "$friend->Name (ID: $friend->User_Id). Once $friend->Name accepts your request, you and $friend->Name will be friends and be able to view each other's shared albums."; ?>
+        </p>
+    </div>
+    <?php endif; ?>
+    <?php if (isset($successFriend)): ?>
+    <div class="alert alert-success">
+        <p>
+            <span class="glyphicon glyphicon-thumbs-up"></span>Your are now friends with <?php echo "$friend->Name (ID: $friend->User_Id)!"; ?>
         </p>
     </div>
     <?php endif; ?>
