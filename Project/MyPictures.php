@@ -50,7 +50,7 @@ $dbManager->close();
                 <input type="hidden" id="ownerId" value="<?php echo $LoggedInUser->User_Id; ?>" />
                 <select id="albumSelect" class="form-control">
                     <?php foreach($albums as $album): ?>
-                    <option value=<?php echo '"'.$album->Album_Id.'">'.$album->Title." — updated on ".$album->Date_Updated; ?></option>
+                    <option value=<?php echo '"'.$album->Album_Id.'"'.((isset($_GET['album']) && $_GET['album'] == $album->Album_Id) ? "selected " : "").'>'.$album->Title." — updated on ".$album->Date_Updated; ?></option>
                         <?php endforeach; ?>
                 </select>
             </div>
