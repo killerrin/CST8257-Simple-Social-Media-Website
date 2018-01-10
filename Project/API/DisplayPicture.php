@@ -2,11 +2,11 @@
     include_once("../Common/IncludeAll.php");
 
     $action = $_GET["action"];          //echo "<p>$action</p>";
-    $filePath = $_GET["filePath"];      //echo "<p>$filePath</p>";
+    $filePath = urldecode($_GET["filePath"]);      //echo "<p>$filePath</p>";
     //$userID = $_GET["userID"];          //echo "<p>$userID</p>";
     //$albumID = $_GET["albumID"];        //echo "<p>$albumID</p>";
 
-    if(!isset($fileName)) { return; }
+    if(!isset($filePath)) { return; }
     //if(!isset($userID)) { return; }
     //if(!isset($albumID)) { return; }
 
