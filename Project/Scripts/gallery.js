@@ -1,6 +1,10 @@
 var Pictures;
+var ReadyToLoad = true;
 
 function populateCarousel() {
+    if (!ReadyToLoad) return;
+    ReadyToLoad = false;
+
     $("#carousel").empty();
     var userID = $("#userId").val();
     var ownerID = $("#ownerId").val();
@@ -28,11 +32,18 @@ function populateCarousel() {
                 $("#carousel").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no pictures in the album!</p></div>");
                 clearPage();
             }
+            ReadyToLoad = true;
             $(".thumbnail").first().click();
+        })
+        .fail(function() {
+            ReadyToLoad = true;
         });
 }
 
 function loadImage(e) {
+    if (!ReadyToLoad) return;
+    ReadyToLoad = false;
+
     // Update current image to clicked image
     var target = $(e.target);
     var displayImage = $("#displayImage");
@@ -65,6 +76,9 @@ function loadImage(e) {
                 $("#commentsContainer").append("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> There are no comments!</p></div>");
             }
             comments.forEach(appendComment);
+        })
+        .always(function() {
+            ReadyToLoad = true;
         });
 
     //TODO: add comment submission box
@@ -108,6 +122,8 @@ function postComment() {
 }
 
 function imageButtonHandler(e) {
+    if (!ReadyToLoad) return;
+    ReadyToLoad = false;
     //alert("Preview Image Button Clicked: ");
 
     // Cache the variables
@@ -135,6 +151,7 @@ function imageButtonHandler(e) {
                 console.log(url);
                 console.log(params.join("&"));
                 currentImage.attr("src", url);
+                ReadyToLoad = true;
 
                 return;
             case "rotateRight":
@@ -149,6 +166,7 @@ function imageButtonHandler(e) {
                 console.log(url);
                 console.log(params.join("&"));
                 currentImage.attr("src", url);
+                ReadyToLoad = true;
 
                 return;
             case "download":
@@ -160,6 +178,7 @@ function imageButtonHandler(e) {
                 ];
 
                 window.location.href = '?' + params.join('&');
+                ReadyToLoad = true;
                 return;
             case "save":
                 var params = [
@@ -169,6 +188,7 @@ function imageButtonHandler(e) {
                 ];
 
                 window.location.href = '?' + params.join('&');
+                ReadyToLoad = true;
                 return;
             default:
                 break;
