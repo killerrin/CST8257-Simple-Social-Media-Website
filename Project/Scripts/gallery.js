@@ -144,7 +144,7 @@ function imageButtonHandler(e) {
                 var params = [
                     "action=rotateLeft",
                     "rotation=" + currentPicture.currentRotation,
-                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                    "filePath=" + encodeURIComponent(currentPicture.gallerySrc)
                 ];
 
                 var url = "API/DisplayPicture.php" + '?' + params.join('&');
@@ -159,7 +159,7 @@ function imageButtonHandler(e) {
                 var params = [
                     "action=rotateRight",
                     "rotation=" + currentPicture.currentRotation,
-                    "filePath=" + encodeURIComponent(currentPicture.originalSrc)
+                    "filePath=" + encodeURIComponent(currentPicture.gallerySrc)
                 ];
 
                 var url = "API/DisplayPicture.php" + '?' + params.join('&');
@@ -170,6 +170,7 @@ function imageButtonHandler(e) {
 
                 return;
             case "download":
+                ReadyToLoad = true;
                 return;
             case "delete":
                 var params = [
