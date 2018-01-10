@@ -16,9 +16,9 @@ $albums = $albumRepo->getAllForUser($LoggedInUser->User_Id);
 
 // Handle delete action
 if (isset($_GET['action']) && isset($_GET['pictureID'])) {
-    $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $picture->Album_Id, $dbManager, false);
     $picture = $pictureRepo->getID(urldecode($_GET['pictureID']));
-
+    $imageManipulation = new ImageManipulation($LoggedInUser->User_Id, $picture->Album_Id, $dbManager, false);
+    
     if ($_GET['action'] == 'delete') {
         if (isset($picture)) {
             $imageManipulation->DeletePictures($picture);
