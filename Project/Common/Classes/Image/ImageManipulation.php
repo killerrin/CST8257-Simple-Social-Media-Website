@@ -76,6 +76,14 @@ class ImageManipulation
     public function DeleteOriginalFolder() { if (is_dir($this->GetOriginalFolder())) { rmdir($this->GetOriginalFolder()); } }
     public function DeleteGalleryFolder() { if (is_dir($this->GetGalleryFolder())) { rmdir($this->GetGalleryFolder()); } }
     public function DeleteThumbnailFolder() { if (is_dir($this->GetThumbnailFolder())) { rmdir($this->GetThumbnailFolder()); } }
+    public function DeleteFolder($path) {
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            is_dir($file) ? $this->DeleteFolder($file) : unlink($file);
+        }
+        rmdir($path);
+        return;
+    }
 
     public function CountPictures() : int
     {
