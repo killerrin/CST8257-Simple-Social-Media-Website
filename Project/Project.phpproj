@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="AddAlbum.php" />
     <Compile Include="AddFriend.php" />
+    <Compile Include="API\CommentUtilities.php" />
     <Compile Include="API\GetPictureCommentsJson.php" />
     <Compile Include="API\GetAlbumPicturesJson.php" />
     <Compile Include="API\GetAlbumsJson.php" />
@@ -90,6 +91,7 @@
     <Content Include="Contents\js\bootstrap.js" />
     <Content Include="Contents\js\bootstrap.min.js" />
     <Content Include="Contents\js\npm.js" />
+    <Content Include="Scripts\gallery.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\Site.js" />
   </ItemGroup>
