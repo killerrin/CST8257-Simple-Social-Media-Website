@@ -51,7 +51,7 @@ elseif (empty($_GET)) {
         $ownerID = $album->Owner_Id;
         $owner = $userRepo->getID($ownerID);
 
-        if (Friendship::AreUsersFriends($friendshipRepo, $user, $owner) && $album->Accessibility_Code == 'shared') {
+        if (($userID === $ownerID) || (Friendship::AreUsersFriends($friendshipRepo, $user, $owner) && $album->Accessibility_Code == 'shared')) {
             $result = $commentRepo->insert(new Comment(null, $userID, $pictureID, $comment, date('Y-m-d H:i:s')));
 
             echo json_encode($result);

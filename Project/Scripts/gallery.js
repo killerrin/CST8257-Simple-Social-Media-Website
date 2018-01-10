@@ -86,6 +86,7 @@ function appendComment(comment) {
 }
 
 function postComment() {
+    console.log("Posting comment...");
     $.post("API/CommentUtilities.php",
         {
             userID: $("#userId").val(),
@@ -96,9 +97,11 @@ function postComment() {
             if (data) {
                 $("#commentText").val("");
                 $("#commentsContainer").prepend("<div class='alert alert-success'><p><span class='glyphicon glyphicon-thumbs-up'></span> Comment posted successfully!</p></div>");
+                console.log("Comment posted successfully.")
             }
             else {
                 $("#commentsContainer").prepend("<div class='alert alert-danger'><p><span class='glyphicon glyphicon-thumbs-down'></span> An error occurred!</p></div>");
+                console.log("Something went wrong!");
             }
             loadImage({ target: $(`img[data-id='${$("#displayImage").attr("data-id")}']`)[0] }, Pictures);
         });
