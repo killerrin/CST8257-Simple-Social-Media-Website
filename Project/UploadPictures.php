@@ -11,7 +11,7 @@ $albumRepo = new DBAlbumRepository($dbManager);
 
 $emptyFieldError = false;
 
-// TODO: Handle form submission
+// Handle form submission
 if (!empty($_POST)) {
     if (empty($_POST['album']) || empty($_FILES['file']))
         $emptyFieldError = true;
@@ -21,6 +21,9 @@ if (!empty($_POST)) {
             $imageManipulation->SavePictures(((array) $_FILES['file']['tmp_name'])[$index], new Picture(null, $_POST['album'], $value, $_POST['title'], $_POST['description'], date('Y-m-d H:i:s')));
 
         }
+        $updatedAlbum = $albumRepo->getID($_POST['album']);
+        $updatedAlbum->Date_Updated = date('Y-m-d H:i:s');
+        $albumRepo->update($updatedAlbum);
         $uploadSuccess = true;
     }
 }
